@@ -1,0 +1,3727 @@
+﻿<!doctype html>
+<head>
+<title>Mini Clinic</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;minimum-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<script language="JavaScript">
+
+function dosearch() {
+var sf=document.searchform;
+var submitto = sf.sengines.options[sf.sengines.selectedIndex].value + escape(sf.searchterms.value);
+window.location.href = submitto;
+return false;
+}
+
+
+function showHide(divId){
+var theDiv = document.getElementById(divId);
+if(theDiv.style.display=="block"){
+theDiv.style.display="";
+}else{
+theDiv.style.display="block";
+}
+}
+
+
+document.addEventListener('play', function(e){
+    var audios = document.getElementsByTagName('audio');
+    for(var i = 0, len = audios.length; i < len;i++){
+        if(audios[i] != e.target){
+            audios[i].pause();
+        }
+    }
+}, true);
+
+
+<!--
+function calculateBmi() {
+var weight = document.bmiForm.weight.value
+var height = document.bmiForm.height.value
+if(weight > 0 && height > 0){	
+var finalBmi = weight/(height/100*height/100)
+document.bmiForm.bmi.value = finalBmi
+if(finalBmi < 18.5){
+document.bmiForm.meaning.value = "That you are underweight."
+}
+if(finalBmi > 18.5 && finalBmi < 25){
+document.bmiForm.meaning.value = "That you are healthy."
+}
+if(finalBmi > 25 && finalBmi <30){
+document.bmiForm.meaning.value = "That you are overweight."
+}
+if(finalBmi > 30){
+document.bmiForm.meaning.value = "That you are obese."
+}
+}
+else{
+alert("Please fill everything correctly")
+}
+}
+//-->
+
+</script>
+
+<style type="text/css">
+html{ 
+height:101%; width:100%;
+overflow-x:hidden;
+overflow-y:scroll;
+    background:#337788;	
+}
+
+.nothing{
+	transform:translate3d(0,0,0);
+	-webkit-transform:translate3d(0,0,0);
+}
+
+a{
+color:#06a;
+text-decoration:none;
+}
+body {
+width:100%;
+margin:0px;
+    background: -webkit-linear-gradient(#202260, #337788);
+    background: linear-gradient(#202260, #337788);
+font-family:'Roboto', sans-serif;
+text-align:center;
+
+}
+
+h4{
+color:#079;
+}
+.searchdiv{
+box-shadow:rgba(0,0,0,0.3) 0px 5px 10px;  
+}
+
+.searchdiv:hover{
+padding-top:40vh !important;
+padding-bottom:40vh !important;
+position:relative !important;
+background: rgba(000,000,000,0.4) !important;
+}
+.searchdiv:hover .textinput{
+height:36px !important;
+}
+
+.searchdiv:hover .submitinput{
+height:36px !important;
+}
+
+
+.button{
+
+background: rgba(000,000,000,0.3);
+margin-top:0px;
+padding-top:5px;
+padding-bottom:5px;
+margin-top:5px;
+box-shadow:#000 0px 0px 2px;
+width:98%;
+margin-left:3px;
+font-size:large !important;
+}
+.drop{
+display:none;
+background:#eee;
+box-shadow:inset 0px 0px 2px 2px #000 !important;
+font-size:medium;
+font-family:Georgia;
+}
+.button:hover{
+box-shadow:0px 0px 2px #aac !important;
+}
+
+.subjects{
+width:100%;
+}
+.subjects a{
+font-size:medium;
+text-decoration:none;
+color:#06a;
+display:inline-block;
+margin:2px;
+min-width:95%;
+padding:2px;
+background:#fff;
+box-shadow:0px 0px 3px #aaa;
+border-radius:4px;
+}
+
+.topic{
+font-size:medium;
+padding:6px;
+font-family:'Roboto', sans-serif;
+margin-left:auto;
+margin-right:auto;
+color:#fff;
+background:#444;
+border-radius:2px;
+box-shadow:0px 0px 2px #000;
+width:94%;
+	
+}
+.topicdrop{
+font-size:medium;
+font-family:Georgia;
+margin-left:auto;
+margin-right:auto;
+color:#222222;
+font-weight:normal;
+display:none;
+background:#eee;
+padding:4px;
+width:96%;
+border-radius:2px;
+box-shadow:inset 0px 0px 2px #000;
+}
+
+ul.ranges li a{
+box-shadow:0px 0px 2px #aaa;
+padding:6px;
+background:#ffffff;
+}
+.help{
+text-align:left;
+}
+.helpdrop{
+display:none;
+}
+.help:hover .helpdrop{
+display:block;
+position:relative;
+}
+
+
+.subjects{
+width:100%;
+}
+
+.bmi{
+box-shadow:0px 0px 2px #aaa;
+position:fixed;
+bottom:1px;
+left:1px;
+padding:4px;
+text-align:left;
+display:inline-block;
+background:#06a;
+color:#eee;
+}
+.bmidrop{
+display:none;
+background:#ffffff;
+color:#06a;
+}
+.bmi:hover .bmidrop{
+display:block;
+position:relative;
+}
+
+.druginfo{
+display: none;
+}
+.searchdiv:hover .druginfo{
+color:#ffffff;
+font-size:small;
+display:block;
+width:100%;
+}
+
+.drugtitle{
+display: none;
+}
+.searchdiv:hover .drugtitle{
+color:rgba(255,255,255,0.3);
+font-size:large;
+display:block;
+width:100%;
+text-align:center;
+padding:4px;
+font-weight:bold;
+}
+
+
+.subjects{
+width:100%;
+}
+
+
+.drop ul{
+display:inline-block;
+}
+table, td, th, tr{
+border:1px solid #5ac;
+border-collapse:collapse;
+padding:2px;
+}
+
+.diseases{
+width:100%;
+}
+.diseases a{
+font-size:medium;
+text-decoration:none;
+color:#fff;
+display:inline-block;
+min-width:95%;
+background:#444;
+box-shadow: 0px 0px 2px #aaa;
+padding:4px;
+}
+.diseases a:hover{
+background:#333;
+box-shadow:none;
+}
+</style>
+</script>
+</head>
+<body>
+
+<div style="text-align:center; max-height:32px; font-size:large; color:#eee; background:#222; border:#222 4px solid; width:100%;  padding:4px; " class="searchdiv">
+	<div style="padding:2px;" class="drugtitle">
+Search Drugs
+</div>
+         <form method="get" action="http://cse.google.com/cse" style="margin-left:auto; margin-right:auto; padding-bottom:0px; text-align:center;">
+		<input type="text" class="textinput" style="height:32px; color:#222; width: 75%; max-width:600px;  border: 1px #0ae solid;" name="q" placeholder="Find a drug by it's chemical/brand name"/><input type="hidden" name="cx" value="013438039746594386770:-kwpiklsxne"/><input type="hidden" name="num" value="20"/><input type="submit" class="submitinput" value="Search" style="color:#ffffff !important; background: #0ae; border:none;  height:32px;  vertical-align:top; border:none;"/>
+	</form>
+	<div style="padding:2px;" class="druginfo">
+Dosage, price, adverse effects, interactions etc. 
+</div>
+	<div style="padding:2px; color:rgba(255,255,255,0.5);" class="druginfo">
+For drugs available in India only
+</div>
+	</div>
+
+ <br>
+
+<div style="text-align:center; display:block; margin-top:10vh; font-size:large; color:#ffffff" class="button" onclick="showHide('historytaking')">
+HISTORY TAKING
+</div>
+<div id="historytaking" class="drop" style="box-shadow:1px 1px 2px #000; background:#eeeeee; padding:3px; width:97%;">
+<span style="color:#444; text-align:center; display:block;">
+<strong>Importance:</strong> Obtaining an accurate history is the critical first step in determining the etiology of a patient's illness.
+A good history alone can cover upto 70% of your diagnosis.</span>
+
+<div onclick="showHide('particulars')" class="topic" style="background:#223;">Patient Particulars</div>
+<div id="particulars" style="text-align:left;" class="topicdrop">
+<ol>
+<li><strong>Name:</strong> To identify the patient and to prevent intermixing for proper management. Name also gives a hint about his/her race or religion.</li>
+<li><strong>Age:</strong> Some diseases are age specific. MI generally occurs at old age.</li>
+<li><strong>Sex:</strong> Some diseases are sex specific. Haemophilia & prostrate cancer occur in males, whereas Obs & Gynae cases will occur in females. Also males are more prone to liver cirrhosis and lung cancer than females due to lifestyle differences. Intersex individuals may have associated congenital abnormalities.</li>
+<li><strong>Address:</strong> Some disease are endemic in an area; eg: malaria is endemic in Assam. TB, kala-azar and cholera are common in India.</li>
+<li><strong>Marital Status:</strong> To rule out STDs, as an unmarried individual may have multiple sex partners.</li>
+<li><strong>Educational Qualifications:</strong> A well educated person will understand the nature of his illness and is likely to follow the instructions given by the doctor.</li>
+<li><strong>Religion:</strong> Some diseases occur more in a certain religion due to lifestyle differences, eg higher incidence of genetic defects in Muslims due to consagnious marriage but lower prostrate cancer due to circumcision. Hindus & Christians are more prone to liver disorder due to alcohol intake.</li>
+<li><strong>Occupation:</strong> Diseases may be related to the occupation; say a person working in a cement factory is likely to have silicosis or asbestosis. The occupation reflects the patient's income, which in turn helps us to prescribe medicines he can afford.</li>
+<li><strong>DOA/Date of Admission:</strong> The day when the patient was admitted</li>
+<li><strong>DOE/Date of Examination:</strong> The day when the patient is being examined</li>
+</ol>
+</div>
+
+<div onclick="showHide('chiefcomplaint')" class="topic" style="background:#234;">Chief Complaint</div>
+<div id="chiefcomplaint" style="text-align:left;" class="topicdrop">
+The chief complaint is the primary reason why the patient comes to the doctor. It could be a fever, pain or swelling somewhere on the body, breathing difficulty or anything. <br>
+The chief complaints are always noted chronologically (in the order of their appearance). For example:
+<div style="background:#ccc;">
+<ol>
+The patient presents with the chief complaints of
+<li>Breathing difficulty for 2 weeks</li>
+<li>Pain in the abdomen for 20 days</li>
+</ol>
+</div>
+Note that 'Breathing difficulty' was written at first since it occured before his pain.
+Two important rules must be followed: <br>
+1. We never use medical terms while writing the history. It is written in patient's own words. Breathing difficulty is not to be written as dyspnoea. Similarly terms like angina, palpitation, syncope, convulsion, diarrhea etc. are avoided. <br>
+2. There should not be more than two chief complaints (three at max). Anything else related with the condition are to be included as associated complaints in the history of present illness.
+</div>
+<div onclick="showHide('hopi')" class="topic" style="background:#245;">History of Present Illness</div>
+<div id="hopi" style="text-align:left;" class="topicdrop">
+The history of present illness is the explanation of the chief complaint and it's associated symptoms. <br>
+For any symptom, say "Pain" the <strong><u>SOCRATES</u></strong> rule can be applied: <br>
+<ul type="none" style="padding:0px; margin:0px;">
+<li><strong><u>S</u>ite:</strong> <br>
+<ul>
+<li>Somatic pain, often well localised, e.g. sprained	ankle</li>
+<li>Visceral pain, more diffuse, e.g. angina pectoris</li>
+</ul>
+<li><strong><u>O</u>nset:</strong>
+It may be sudden (over days or weeks) or gradual (insidious, over months or years)</li>
+<li><strong><u>C</u>haracter:</strong>Using adjectives, e.g. sharp/dull, burning/tingling,
+boring/stabbing, crushing/tugging</li>
+<li><strong><u>R</u>adiation:</strong>Referred by a shared neuronal pathway	to a distant
+unaffected site, e.g. diaphragmatic pain at the shoulder tip
+via	the	phrenic	nerve (C3,C4)</li>
+<li><strong><u>A</u>ssociated Symptoms:</strong>The patient's condition may be associated with symptoms like nausea, vomiting, weakness, numbness, aura etc. For e.g. visual aura and nausea accompanying migraine.</li>
+<li><strong><u>T</u>iming:</strong>
+Episodic	or	continuous
+<ul>
+<li> If	episodic, duration	and	frequency	of	attacks</li>
+<li> If	continuous,	any	changes	in	severity</li>
+</ul>
+</li>
+<li><strong><u>E</u>xacerbating/Relieving Factor:</strong>
+Circumstances in which the condition aggravates or relieves. It may be a certain posture, activity, food, medicine, temperature etc.
+</li>
+<li><strong><u>S</u>everity:</strong> We ask the patient if the condition is <u>mild</u>, <u>moderate</u> or <u>severe</u>. Diurnal variation (if it becomes severe during day or night) is to be noted.</li>
+</ul>
+
+
+ <br>
+</div>
+
+<div onclick="showHide('hopa')" class="topic" style="background:#205060;">History of Past Illness</div>
+<div id="hopa" style="text-align:left;" class="topicdrop">
+<p><strong>Past Medical History </strong></p>
+Ask about: <br>
+<ul style="padding:8px;" type="none">
+  <li>Major illnesses(TB, hepatitis, diabetes, hypertension, HIV), beginning in childhood(measles, mumps, rubella, whooping cough, chicken pox)</li>
+  <li>Hospitalizations </li>
+  <li>Surgeries </li>
+  <li>Significant injuries </li>
+  <li>Medications </li>
+  <li>Allergies </li>
+  <li>Immunizations </li>
+  <li>Transfusions </li>
+  <li>Gynecologic and obstetric for women (LMP, menstrual irregularities) </li>
+  <li>Psychiatric history </li>
+</ul>
+</div>
+
+<div onclick="showHide('perhist')" class="topic" style="background:#256;">Personal History</div>
+<div id="perhist" style="text-align:left;" class="topicdrop">
+We ask about the patient's diet (veg/non-veg) and about the food he had had eaten prior to his disease. We also ask if he takes alcohol, tobacco, cigarettes, drugs etc. If he does, then how much and how frequently. <br> <br>
+<strong><span style="color:#47a;">Health Habits/Lifestyle</span></strong> <br>
+    <ul style="padding:8px;" type="none">
+      <li><strong>"The usual day" </strong> <br>
+        <ul>
+          <li>A good indicator of patient's functional state - what they can do. </li>
+          <li>".What is a usual day like for you? Tell me about your usual day. How has that been changed any by this illness?" </li>
+        </ul>
+      </li>
+      <li><strong>Diet </strong> <br>
+        <ul>
+          <li>24 hour recall reasonably accurate way of finding out what patients eat. </li>
+          <li>"Tell me what you ate yesterday, beginning with breakfast." </li>
+          <li>"Was that a typical day for you?</li>
+          <li>How was it different?" </li>
+        </ul>
+      </li>
+      <li><strong>Exercise</strong> <br>
+        <ul>
+          <li>type of exercise, frequency, and duration. &nbsp;&nbsp; </li>
+          <li>Tobacco use </li>
+          <li>Type, age at onset of use, frequency, intensity, if quit, when. </li>
+          <li>For example, smoked 1 ppd (pack-per-day) for 30 years, quit 5 years ago. </li>
+        </ul>
+      </li>
+      <li><strong>Alcohol use </strong> <br>
+        <ul>
+          <li>Frequency, duration, amount, history of alcohol related problems. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </li>
+        </ul>
+      </li>
+      <li><strong>Illegal drug use </strong> <br>
+        <ul>
+          <li>Type of drug, frequency and duration of use, how it is used (smoked, injected, etc.), associated problems &nbsp;&nbsp;&nbsp; </li>
+        </ul>
+</div>
+
+<div onclick="showHide('famhist')" class="topic" style="background:#205060;">Family History</div>
+<div id="famhist" style="text-align:left;" class="topicdrop">
+
+Number of family members alongwith their health status (are they enjoying good health or suffering from some diseases). This would include information about: <br>
+<ul style="padding:12px;" type="square">
+  <li>Hereditary diseases (Huntington's chorea) </li>
+  <li>Familial illnesses (diabetes, hypertension, certain cancers) </li>
+  <li>Family traits </li>
+  <li>Illnesses that would affect the patient's family environment, and have potential for ongoing affect on patient (alcoholism) </li>
+  <li>Current illnesses in family that could result from exposure to a common infectious agent (strep throat) or toxic exposure (carbon monoxide poisoning). </li>
+  <li>Helpful to ask about:</br/>
+    <ul>
+      <li>Current health/illnesses of parents, siblings and children, and age and cause of death, if deceased. </li>
+      <li>Specific questions about common familial, such as diabetes, hypertension, heart disease, cancer. </li>
+      <li>Specific question about family members with illnesses similar to patient's illness </li>
+      <li>Be prepared to respond to emotional issues that might arise.</li>
+    </ul>
+</div>
+
+<div onclick="showHide('sochist')" class="topic" style="background:#245;">Socio-economic History</div>
+<div id="sochist" style="text-align:left;" class="topicdrop">
+Job, condition of his house (kuccha/pucca), water source etc. are asked. Lifestyle diseases like atherosclerosis is more common among people belonging to high socioeconomic status; whereas malnutrition is common among the poor. 
+</div>
+
+<div onclick="showHide('drughist')" class="topic" style="background:#234;">Drug/Allergy History</div>
+<div id="drughist" style="text-align:left;" class="topicdrop">
+Ask in details about the medicines taken already and medicines being taken or being
+applied locally.
+<ul style="padding:8px;" type="none">
+  <li>Medications <br>
+    <ul>
+      <li>Name, dosage and frequency of medicine, and reason for use, if not clear from  other history. Consider asking about medicines prescribed by other doctors. &nbsp; For people on many medicines, good idea to ask them to bring medicines in.</li>
+      <li>Ask about over the counter medicines. &nbsp;&nbsp;&nbsp;&nbsp; </li>
+      <li>Ask about herbal medicines, vitamins, and nutritional supplements </li>
+    </ul>
+  </li>
+  <li>Allergies <br>
+    <ul>
+      <li>Have patient describe allergic reaction - oftentimes, patient has experienced a side effect, not a true allergy. </li>
+    </ul>
+  </li>
+  <li>Immunizations <br>
+    <ul>
+      <li>For adults, this includes flu, pneumonia, tetanus, hepatitis B, chickenpox (if they did not have chicken pox in childhood). Also includes history of TB skin testing (PPD), and immunizations related to travel, foreign residence, or occupation/avocation. (For example, spelunkers should receive rabies vaccine). </li>
+    </ul>
+  </li>
+
+  </ul>
+ <br>
+
+</div>
+
+<div onclick="showHide('menshist')" class="topic" style="background:#223;">Menstrual History</div>
+<div id="menshist" style="text-align:left;" class="topicdrop">
+<ol style="padding:15px;">
+      <li>Inquire about LMP (last menstrual period) in women of childbearing age. </li>
+      <li>Age at menarche (when periods began); frequency of periods; duration of flow. </li>
+      <li>Use of birth control in reproductive age women. </li>
+      <li>Number of pregnancies, children, method of delivery (vaginal or cesarean section). </li>
+    </ul>
+</div>
+
+</div>
+
+<div style="text-align:center; display:block; font-size:large; color:#ffffff" class="button" onclick="showHide('genexam')">
+GENERAL EXAMINATION
+</div>
+<div id="genexam" class="drop" style="box-shadow:1px 1px 2px #000; background:#eeeeee; padding:3px; width:97%;">
+All examinations must be done from the right side of the patient and bilaterally if possible.<br><br> <div style="background:#ffffff; box-shadow:#aaa 0px 0px 2px; width:95%; padding:4px; text-align:left;"> <br>Check the<br/> <ul>
+<li>Built</li><li>Nutrition </li><li>Decubitus (lying down/ propped up/ sitting etc)</li><li>Awareness & level of consciousness</li> </ul> </div><br>
+<span style="color:#48a;"><strong>Examination of:</strong></span>
+<div onclick="showHide('headexamn')" class="topic" style="background:#223;">Head</div>
+<div id="headexamn" style="text-align:left;" class="topicdrop">
+
+<ul style="padding:14px;" type="square"><span style="color:#a33;"><strong>Hair</strong></span> <br>
+<li>Density: generalised/localised hair loss</li>
+<li>Texture: normal/thick/silky</li>
+<li>Distribution</li>
+</ul>  <br>
+
+
+<ul style="padding:14px;" type="square"><span style="color:#a33;"><strong>Face</strong></span> <a href="face.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> <br> <br>
+<li>Moon face(cushing syndrome)</li>
+<li>Prominent jaws(Acromegaly)</li>
+<li>Puffiness and earthly coloured (Renal/CVS failure)</li>
+<li>Thin face(hyperthyroidism)</li>
+<li>Lionion(leprosy)</li>
+</ul> <br>
+
+<ul style="padding:14px;" type="square"><span style="color:#a33;"><strong>Eye (bilateral examination)</strong></span> <br>
+<li>Check lower palpebral conjunctiva for Anemia/Pallor (ask patient to look upwards)</li>
+<li>Check upper bulbar conjunctiva for Jaundice/Icterus (ask patient to look downwards)</li>
+<li>Puffiness under lower eyelid Renal/CVS failure)</li>
+<li>Drooping of upper eyelid/ptosis</li>
+<li>Urcus: halo around pupil (normal in elderly; indicates hyperlipidemia at young age)</li> <br>
+<a href="pallor.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> <br> <br>
+
+</ul> <br>
+
+<ul style="padding:14px;" type="square"><span style="color:#a33;"><strong>Mouth</strong></span> <br>
+
+	<p>
+		Inspection of the mouth and tongue may yield important information:
+	</p>
+	<p>
+		 Tongue: <a href="tongue.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a>
+	</p>
+	<ul>
+		<li> the tongue is blue in patients with central cyanosis</li>
+		<li> the tongue is red(beefy) and sore along with atrophic glossitis (smooth surface due to loss of papillae) in iron and Vit-B deficient patients</li>
+		<li> the tongue is enlarged in:</li>
+		<ul>
+			<li> acromegaly</li>
+			<li> amyloidosis</li>
+			<li> myxoedema</li>
+		</ul>
+		<li> the tongue is spastic in motor neurone disease</li>
+	</ul>
+	<p>
+		 Gums: <a href="gums.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> 
+	</p>
+	<ul>
+		<li> bleeding gums are characteristic of:</li>
+		<ul>
+			<li> periodontal disease</li>
+			<li> leukaemia</li>
+			<li> scurvy</li>
+		</ul>
+		<li> hypertrophied gums may indicate chronic phenytoin use</li>
+		<li> a blue line along the margin of the teeth indicates lead poisoning</li>
+	</ul>
+	<p>
+		 Teeth:
+	</p>
+	<ul>
+		<li> yellow teeth may indicate tetracycline use in early life</li>
+		<li> caries may be cause local and systemic infection</li>
+		<li> hypoplastic teeth may indicate dentinogenesis imperfecta</li>
+		<li> Hutchison's teeth are seen in congenital syphilis</li>
+	</ul>
+	<p>
+		 General:
+	</p>
+	<ul>
+		<li> angular stomatitis is common in iron deficiency</li>
+		<li> aphthous ulceration</li>
+		<li> leukoplakia</li>
+		<li> herpes simplex infection</li>
+		<li> pigmented lesions of Peutz-Jeghers syndrome</li>
+		<li> white reticular lesions of lichen planus</li>
+		<li> the tight mouth of scleroderma</li>
+		<li> oropharyngeal cancer may present as an ulcer or a mass</li>
+	</ul>
+ <br>
+</div>
+
+
+<div onclick="showHide('neckexamn')" class="topic" style="background:#234;">Neck</div>
+<div id="neckexamn" style="text-align:left;" class="topicdrop">
+<p><strong>Approach</strong></p>
+<ul>
+<li>Patient sitting in chair</li>
+<li>Glass of water nearby (take the hint) - be prepared to examine the thyroid in full</li>
+<li>Expose the neck down to clavicles - undo the top buttons of a shirt </li>
+<li>Ask the patient to remove any jewellery </li>
+</ul>
+<p><strong>Inspect</strong></p>
+
+<ol>
+<li>Site of lump <br>
+<ul style="padding:12px;" > <br>
+<li>Midline, supraclavicular</li>
+<li>Size</li>
+<li>Scars</li>
+</ul>
+</li>
+<li>Protrusion of the tongue <br>
+<ul style="padding:12px;" >
+<li>Ask patient to open mouth and stick tongue out as far as possible</li>
+<li>Moves on protrusion = thyroglossal cyst (related to base of tongue by patent fibrous track running from the central portion to the hyoid bone)</li>
+<li>Does not move on protrusion = thyroid lump</li>
+</ul>
+</li>
+<li>Swallowing <br>
+<ul style="padding:12px;" >
+<li>Place glass of water in patient's hands</li>
+<li>Ask to take sip of water, hold in mouth, swallow</li>
+<li>If moves on swallowing = thyroid gland issue / thyroglossal cyst</li>
+</ul>
+</li>
+<li>Engorged veins for Heart Failure (see CARDIOVASCULAR SYSTEM examination)</li>
+</ol>
+<p><strong>Palpate</strong></p>
+<ol>
+<li>From the back <br>
+<ul style="padding:12px;" > <br>
+<li>be gentle, watch for discomfort</li>
+<li>Use fingertips (obviously!) to elicit physical signs</li>
+<li>Demonstrate the<em> boundaries of the triangles of the neck </em></li>
+</ul>
+</li>
+
+<li>Determine whether the lump (if any) is solid or cystic</li>
+
+ <br>
+<li>Examine the thyroid gland in full  </li> <br>
+<a href="Thyroid.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> <br> <br>
+<li>Examine the neck thoroughly using the up and down technique <br> <br><a href="Lymph%20Nodes.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> <br> <br>
+<ul style="padding:12px;" >
+<li>Palpate from the chin backwards to below the ears</li>
+<li>Palpate down the anterior border of sternocleidomastoid to clavicle</li>
+<li>Move laterally along the clavicle and then up the posterior border of sternocleidomastoid</li>
+<li>Finish by palpating the back of the scalp for occipital lymph nodes</li>
+</ul>
+</li>
+</ol>
+
+
+<p>Cervical lymph nodes:</p> <br>
+
+<ol>
+<li>Submental</li>
+<li>Submandibular</li>
+<li>Anterior cervical chain</li>
+<li>Pre-auricular</li>
+<li>Post-auricular</li>
+<li>Occipital</li>
+<li>Jugulo-digastric</li>
+<li>Posterior triangular (cervical)</li>
+<li>Supraclavicular</li>
+<li>Infraclavicular </li>
+</ol> <br>
+
+<p><strong>Differential diagnosis of neck lumps</strong></p>
+<p>&nbsp;</p>
+<table border="0" style="max-width:100%;">
+<tbody>
+<tr>
+<td>Position</td>
+<td>Solid </td>
+<td>Cystic </td>
+</tr>
+<tr>
+<td>Midline </td>
+<td>Thyroid</td>
+<td>Thyroglossal cyst </td>
+</tr>
+<tr>
+<td>Anterior triangle</td>
+<td>Lymphadenopathy<br>Chemodectoma</td>
+<td>Cold abscess</td>
+</tr>
+<tr>
+<td>Posterior triangle</td>
+<td>Lymphadenopathy</td>
+<td>Pharyngeal pouch<br>Cystic hygroma</td>
+</tr>
+<tr>
+<td>Within SCM</td>
+<td>Sternocleidomastoid tumour</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+
+
+<a href="http://www.surgicalnotes.co.uk/node/361" style="color#aaa; font-size:small;">Source: surgicalnotes.co.uk</a>
+<p>&nbsp;</p>
+</div>
+
+
+<div onclick="showHide('handexamn')" class="topic" style="background:#245;">Hand</div>
+<div id="handexamn" style="text-align:left;" class="topicdrop">
+Pay particular attention to the following:
+
+</p><ol type="a">
+  <li><span style="font-weight:bold; color:#06a;">Appearance of hand and fingers:</span> Any obvious deformity or discoloration? 
+    Do they appear relatively red and well perfused or white/mottled? </li> <br>
+  <li><span style="font-weight:bold; color:#06a;">Capillary refill/ Nail blanch:</span> This is a mechanism for gauging arterial perfusion. Press 
+    the nail bed or tip of any finger for several seconds, causing the underlying 
+    skin to whiten. After releasing pressure, the normal pink color should return 
+    in 2-3 seconds. Delay implies under perfusion. <br>Severe vasospasm, referred to as Raynaud's 
+    Phenomenon, occurs most frequently in women after exposure to cool temperatures, 
+    causing both hands to become white and painful. 
+
+  </li> <br>
+  <li><span style="font-weight:bold; color:#06a;">Joint abnormalities:</span> deformity of the metacarpal-phalyngeal 
+    joints on every finger of both hands is consistent with a systemic inflammatory 
+    process like Rheumatoid Arthritis. An isolated abnormality of a single, distal 
+    joint, however, is more likely secondary to local trauma or degenerative arthritis. 
+
+</p></li>
+
+
+
+
+
+<li>
+ <span style="font-weight:bold; color:#06a;">Clubbing:</span> Bulbous appearance of the distal phalanges of all fingers along with concurrent loss of the normal angle between the nail base and adjacent skin. This is most commonly associated with conditions that cause chronic hypoxemia (e.g. severe emphysema), though it is also associated with a number of other conditions. <br>
+ <br>
+
+ <br> <br>
+</li>
+  <li> 
+    <div align="left"><span style="font-weight:bold; color:#06a;">Cyanosis (peripheral):</span> A bluish discoloration visible at the nail bases 
+      in select patient with severe hypoxemia or hypoperfusion. As with clubbing, 
+      it is not at all sensitive for either of these conditions. <br> <br>
+   <a href="upper_cyanosis.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> <br> <br>
+    </div>
+  </li><li><span style="font-weight:bold; color:#06a;">Splinter Hemorrhages:</span> Short, thin, brown, linear streaks in the nails of 
+    some patients (the minority) with endocarditis. 
+	</li>
+    <p> 
+      </p>
+  
+</li>
+</div>
+
+
+<div onclick="showHide('legexamn')" class="topic" style="background:#256;">Leg</div>
+<div id="legexamn" style="text-align:left;" class="topicdrop">
+
+<strong><u>The Femoral Region</u>:</strong> Socks, stockings, pants and skirts should all be removed.
+Make note of any discrete swellings, which might represent adenopathy or a femoral hernia.  <br>
+Palpate the area, feeling carefully for the femoral pulses as well as for inguinal/femoral adenopathy (nodes which surround the femoral artery and vein; and up to one cm in size are considered non-pathologic). If you feel any lymph nodes, note if they are firm or soft, fixed in position or freely mobile (fixed, firm nodes are more worrisome for pathologic states).  
+ <br> <br>
+<strong><u>The Popliteal Region</u>:</strong>Move down to the level of the knee allowing it to remain slightly bent. Place your hands around the knee and push the tips of your fingers into the popliteal fossa in an effort to feel the popliteal pulse. Note whether it feels simply pulsatile (normal) or enlarged and aneurysmal (uncommon). This artery is covered by a lot of tissue and can be difficult to identify, so you may need to push pretty hard.
+ <br> <br>
+<strong><u>The ankles and feet</u>:</strong>
+Check for the following conditions-
+<ol style="padding:15px;">
+<li><span style="color:#06a; font-weight:bold;">Ankle Oedema:</span>
+Check for pitting oedema by applying firm pressure with the
+thumb for at least 10-15 sec but not exceeding 30 seconds over a bony prominence; at the ankle above the medial
+malleolus, lower end of tibia or upper part of shin bone and then the pressure is released. Presence of a pit
+staying for >30 seconds indicates pitting oedema. <br> <br>
+ <br>
+
+
+</li>
+ <br>
+
+
+<li><span style="color:#06a; font-weight:bold;">Color:</span> Venous insufficiency is characterized by a dark bluish/purple discoloration.  Over time,  long standing stasis of blood leads to the deposition of hemosiderin, giving the skin a dark, speckled appearance.  <br>Patients with severe arterial insufficiency, on the other hand, may have relatively pale skin as a result of under perfusion.  When their legs are placed in a dependent position, gravity enhances arterial inflow and the skin may become more red as maximally dilated arterioles attempt to bring blood to otherwise starved tissues.  <br> In cases of severe ischemia, the affected areas  (usually involving the most distal aspect of the foot), can appear whitish or mottled, giving the leg a marbleized appearance.  Dead tissue turns black (<strong>gangrene</strong>).  <br>Cellulitis (infection in the skin) will cause the skin to appear bright red. 
+
+</li></br> 
+
+
+<li><span style="color:#06a; font-weight:bold;">Obvious swelling of the leg:</span> If present, is it symmetric?  To what level does the swelling exist 
+	(i.e. ankle, calf, knee etc.)? It may indicate presence of underlying causes like deep vein thrombosis.
+</li></br> 
+
+<li><span style="color:#06a; font-weight:bold;">Nail growth:</span> Nail thickening and deformity often occurs with arterial insufficicency; also with fungal 
+    infections.
+	</li></br> 
+<li><span style="color:#06a; font-weight:bold;">Skin:</span> Any obvious growths?  Shiny, hairless appearance (seen with arterial insufficiency)?
+Dilated or varicose superficial veins?  Ulceration of the skin can occur in the setting of either 
+venous or arterial disease. <br>
+Venous stasis ulcers are commonly seen the bottom of the foot and between the toes in patients with diabetes who are predisposed as a result of sensory impairment, arterial insufficiency, or both.
+ <br> <br>
+<u>Probing the depth of an ulcer:</u> This can 
+ be explored with the use of a Q-tip. If the bone is visible or can be reached 
+ with the Q-tip, the infection is assumed to involve the underlying structure. 
+ This is referred to as clinical osteomyelitis. If the 
+ ulcer developes in a patient with neuropathy (as is the case here), then the 
+ act of probing does not cause pain because the area is insensate. 
+    
+</li></br> 
+<li><span style="color:#06a; font-weight:bold;">Temperature:</span> Arterial insufficiency will often cause the skin to feel cool.  Infection, on the 
+	other hand, causes hyperemia and relative warmth.  
+</li></br> 
+
+<li><span style="color:#06a; font-weight:bold;">Capillary Refill:</span> Push on the tip of the great toe or the nail bed until blanching occurs.  Then 
+release and note how long it takes for the red color to return, a reflection of blood inflow to the 
+distal aspect of the lower extremity.  Longer then 2-3 seconds is considered abnormal and consistent with arterial insufficiency. 
+Refill may also be delayed in the setting of significant hypovolemia, as decreased blood volume available for perfusion is shunted away from the extremities to feed more vital organs. 
+</li> <br>
+<a href="leg_exam.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> 
+</ol>	
+</div>
+
+<span style="color:#48a;"><strong>Vital Signs:</strong></span>
+<div onclick="showHide('pulseexamn')" class="topic" style="background:#245;">Pulse</div>
+<div id="pulseexamn" style="text-align:left;" class="topicdrop">
+The most common site for palpation is the radial artery pulse. We use 3 fingers of the hand corresponding to patient's palm which is rested on the palm of the other hand (like a semi-flexed and semi-pronated handshake). <br><strong>The 3 fingers:</strong> <br>
+1. Proximal finger to occlude and stabilize the artery. <br>
+2. Middle finger to check the parameters- rate, rhythm volume etc. Volume is best assessed by carotid pulsations. <br>
+3. Distal finger to block retrograde pulsations from palmar arch. <br>
+
+ <br>
+<a href="pulse-diagnosis.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a>
+
+<h4 style="color:#666;">PARAMETERS</h4>
+<ol>
+  <li><a href="#rate">Rate</a></li>
+  <li><a href="#rhythm">Rhythm</a></li>
+  <li><a href="#character">Character</a></li>
+  <li><a href="#delays">Delays</a></li>
+  <li><a href="#surface_anatomy_of_pulses">Surface anatomy of pulses</a></li>
+</ol>
+<h3><a name="rate">Rate</a></h3>
+<ul>
+  <li>&lt;60: bradycardia</li>
+  <li>&gt;100: tachycardia</li>
+</ul>
+<h3><a name="rhythm">Rhythm</a></h3>
+<ul>
+  <li>Regular</li>
+  <li>Regularly irregular</li>
+  <li>Irregularly irregular</li>
+</ul>
+<h3><a name="character">Character</a></h3>
+<ul>
+  <li>Bounding pulse:<br>
+    • CO2 poisoning</li>
+  <li>Collapsing pulse, or 'water hammer pulse':<br>
+    • Aortic regurgitation<br>
+    • Heart block<br>
+    • PDA&nbsp;</li>
+  <li>Plateau pulse:<br>
+    • Aortic stenosis</li>
+  <li>Pulsus alterans [alternate strong, weak beats]:<br>
+    • LVF</li>
+  <li>Pulsus paradoxus [volume decreases on inspiration more than normal: by &gt;10mm Hg]:<br>
+    • Constrictive pericarditis<br>
+    • Tamponade<br>
+    • Severe asthma</li>
+  <li>Small volume:<br>
+    • Aortic stenosis<br>
+    • Shock<br>
+    • Pericardial effusion</li>
+</ul>
+<h3><a name="delays">Delays</a></h3>
+<ul>
+  <li>Radioradial delay</li>
+  <li>Radiofemoral delay: test in pts with hypertension or ejection systolic murmur:<br>
+    • Coarctation of aorta</li>
+</ul>
+
+<h3><a name="surface_anatomy_of_pulses">Other sites</a></h3>
+<ul>
+
+  <li>Brachial<br>
+    • Cubital fossa, medial to biceps tendon.</li>
+  <li>Carotid<br>
+    • Just lateral to upper border of thyroid cartilage.</li>
+  <li>Superficial temporal:<br>
+    • Anterior to ear as crosses temporal bone's zygomatic process.</li>
+  <li>Abdominal aorta:<br>
+    • In midline, at umbilicus pressing into abdomen.<br>
+    • Use caution if large Abdominal Aortic Aneurysm, to avoid rupture.</li>
+  <li>Femoral<br>
+    • Below inguinal ligament, midway between ASIS and pubic symphysis [not
+    pubic tubercle].<br>
+    • May be reduced or absent in arteriosclerotic dz.</li>
+  <li>Popliteal<br>
+    • Flex knee before palpating.<br>
+    • In midline, on popliteal side of lower end of femur.<br>
+    • Most difficult one to palpate.<br>
+    • Alternative method: Dr's one hand on pt's knee, other hand under knee.
+    Push flexed knee downwards [into extension] until can feel popliteal.</li>
+  <li>Posterior tibial<br>
+    • Posterior, inferior to medial malleolus, between flexor digitorum longus
+    and flexor hallucis longus.</li>
+  <li>Dorsalis pedis<br>
+    • Lateral to extensor hallucis longus, over tarsal bones.<br>
+    • Palpate with 3 fingers along artery.<br>
+    • May be reduced or absent in peripheral vascular dz.</li>
+ 
+  
+</ul> <br>
+&nbsp; <a href="https://sites.google.com/site/indianmedicosonline/medicos/jvp" style="color:#fff; background:#038; box-shadow:#444 0px 0px 2px; padding:5px;"/>Jugular Venous Pressure</a> <br> <br>
+</div>
+
+
+<div onclick="showHide('bpexamn')" class="topic" style="background:#234;">Blood Pressure</div>
+<div id="bpexamn" class="topicdrop" style="text-align:left;">
+<table style="max-width:100%; margin-left:auto; margin-right:auto;">
+  <thead>
+    <tr>
+      <th>Systolic (mm Hg)</th>
+      <th>Diastolic (mm Hg)</th>
+      <th>Category*</th>
+      
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td colspan="4"><p>*Ranges may be lower for children and teenagers.</p>
+        </td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr>
+      <td>Below 120</td>
+      <td>and Below 80</td>
+      <td>Normal blood pressure</td>
+     
+    </tr>
+    <tr>
+      <td>Between 120-139</td>
+      <td>or Between 80-89</td>
+      <td>Prehypertension</td>
+      
+    </tr>
+    <tr>
+      <td>Between 140-159</td>
+      <td>or Between 90-99</td>
+      <td>Stage 1 hypertension</td>
+    
+    </tr>
+    <tr>
+      <td>160 or higher</td>
+      <td>or 100 or higher</td>
+      <td>Stage 2 hypertension</td>
+      
+    </tr>
+  </tbody>
+</table> <br> <br>
+
+<strong>Hypotension:</strong> Unlike hypertension, hypotension is defined primarily by signs and symptoms of low blood flow and not by a specific blood pressure number.
+Low blood pressure (hypotension) is a pressure so low that it causes hypoperfusion of vital organs which may be temporarily or permanently damaged. <br> <br>
+The most common symptoms of hypotension are: <br>
+<ul>
+    <li>Dizziness or lightheadedness</li>
+    <li>Fainting (syncope)</li>
+    <li>Lack of concentration</li>
+    <li>Blurred vision</li>
+    <li>Nausea</li>
+    <li>Cold, clammy, pale skin</li>
+    <li>Rapid, shallow breathing</li>
+    <li>Fatigue</li>
+    <li>Depression</li>
+    <li>Thirst</li>
+</ul>
+</div>
+<br/>
+<div onclick="showHide('pallor')" class="topic" style="text-align:center; background:#046;">Pallor</div>
+
+<div id="pallor" style="text-align:left;" class="topicdrop" >
+<p><strong>Definition:</strong> Pallor is the paleness of skin and mucous membranes, due to the reduced amount of oxyhemoglobin or decreased peripheral perfusion. Reduced amount of oxyhaemoglobin results in increased amount of reduced haemoglobin.</p>
+<p><strong>Sites to look for pallor:</strong></p>
+<ol>
+<li>Lower palpebral conjunctiva</li>
+<li>Tip and dorsum of the tongue</li>
+<li>Soft palate</li>
+<li>Nail beds</li>
+<li>Palmar or plantar creases</li>
+<li>General body skin</li>
+</ol>
+<p><strong>Pallor in lower palpebral conjunctiva:</strong></p>
+
+&nbsp; <a href="pallor.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a>
+
+<p><span style="text-decoration: underline;"><span id="more-129"></span>How (Technique)?</span> Pull the lower eyelid down and compare the color of anterior part of the palpebral conjunctiva (attached to the inner surface of the eyelid) with the posterior part where it reflects off the sclera. There is usually a marked difference between the red anterior and creamy posterior parts. This difference is absent when significant anemia is present.</p>
+<p>Use both your thumb to retract eyelids downward on both the sides simultaneously and as you do so, ask the patient to look upwards.</p>
+<p><span style="text-decoration: underline;">Why(Reason)?</span> The mucosa over this region is very thin and the underlying vessels are clearly seen and the pallor can be judged.</p>
+<p><strong>Pallor in palms:</strong></p>
+<p><span style="text-decoration: underline;">How?</span> As the patient to hyper-extend the fingers. Compare the color of palmar crease with that of the adjacent skin of palm. Pallor is said to be present if both are of same color.</p>
+<p><strong>Pallor in nailbeds:</strong></p>
+<p><span style="text-decoration: underline;">How?</span> Press the nail and note the color of nailbed after releasing the digital pressure.</p>
+<p><strong>Causes of pallor:</strong></p>
+<p>1) Anemia (can be appreciated clinically when hemoglobin &lt;8-9 g/dl)</p>
+<p>2) Pallor without anemia:</p>
+<ul>
+<li>Physiologic (“fair skinned”)</li>
+<li>Shock</li>
+<li>Hypoglycemia and other metabolic derangements</li>
+<li>Respiratory distress</li>
+<li>Skin edema</li>
+<li>Pheochromocytoma</li>
+</ul>
+<p><strong>Pallor and Anemia:</strong></p>
+<p>Although often used as synonyms, presence of pallor doesn’t always indicate anemia. Pallor is a sign, while anemia is a diagnosis based on laboratory results. Anemia is the qualitative or quantitative dimunition of RBC and/or hemoglobin concentration in relation to standard age and sex.</p>
+<p><span style="text-decoration: underline;">Clinical grading of anemia:</span></p>
+<ol>
+<li>Mild: Pallor of conjunctiva and/or mucous membrane</li>
+<li>Moderate: Above + Pallor of skin</li>
+<li>Severe: Above + Pallor of palmar creases</li>
+</ol>
+<p><span style="text-decoration: underline;">WHO grading of anemia:</span></p>
+<ol>
+<li>Mild: 10 g/dl to cut off point for ages</li>
+<li>Moderate: 7-10 g/dl</li>
+<li>Severe: &lt;7 g/dl</li>
+</ol>
+<blockquote><p><strong><em>Hemoglobin thresholds used to define anemia:</em></strong></p>
+<ul>
+<li><em>Men (&gt;15 years): 13 g/dl</em></li>
+<li><em>Teens (12-15 years): 12 g/dl</em></li>
+<li><em>Women, non-pregnant (&gt;15 years): 12 g/dl</em></li>
+<li><em>Women, pregnant: 11 g/dl</em></li>
+<li><em>Children (5-12 years): 11.5 g/dl</em></li>
+<li><em>Children (0.5-5 years): 11 g/dl</em></li>
+</ul>
+</div>
+
+<div onclick="showHide('clubbing')" class="topic" style="text-align:center; background:#057;">Clubbing</div>
+
+<div id="clubbing" style="text-align:left;" class="topicdrop" >
+
+<ul style="padding:8px;">
+<span style="font-size:small;">Continued from General Examination of Hand</span> <br> <br>
+<strong>Causes of clubbing</strong> <br>
+ Mnemonic: 
+ <br><span style="color:#c00;"><u>CLUBBING</u></span> & <span style="color:#0a6;">ABCDEF</span> under <span style="color:#c00;"><u>L</u></span>. <br> <br>
+	<li><span style="color:#c00;"><u>C</u></span>yanotic heart disease</li>
+	<li><span style="color:#c00;"><u>L</u></span>ung diseases:</li>
+ <ul style="padding:12px;">
+		<li><span style="color:#0a6;">A</span>bscess</li>
+		<li><span style="color:#0a6;">B</span>ronchiectasis</li>
+		<li><span style="color:#0a6;">C</span>ystic Fibrosis</li>
+		<li><span style="color:#0a6;">D</span>ont say COPD</li>
+		<li><span style="color:#0a6;">E</span>mpyema</li>
+		<li><span style="color:#0a6;">F</span>ibrosis</li>
+</ul>
+	<li><span style="color:#c00;"><u>U</u></span>lcerative Colitis + Inflammatory Bowel Disease(Crohn's Disease)</li>
+	<li><span style="color:#c00;"><u>B</u></span>iliary cirrhosis</li>
+	<li><span style="color:#c00;"><u>B</u></span>irth Defects</li>
+	<li><span style="color:#c00;"><u>I</u></span>nfective Endocarditis</li>
+	<li><span style="color:#c00;"><u>N</u></span>eoplasm(eg. Lung cancer or mesothelioma)</li>
+	<li><span style="color:#c00;"><u>G</u></span>astrointestinal malabsorption syndrome(Coeliac disease)</li>
+</ul>
+ <br> <br>
+ <strong>Signs of clubbing</strong> <br>
+  <ul style="padding:8px;" type="disc">
+  <li><u>Fluctuation Test</u>: Place the patients fingertip on the pulp of examiner’s two thumbs and hold in this position by gentle pressure with the tips of examiner’s middle fingers applied on the patient’s proximal interphalangeal joint. The patient’s finger is then palpated over the base of the nail by the tips of examiner’s index fingers. There is increased fluctuation of the nail bed in clubbing due to softening of the nail-bed.</li> <br>
+  
+  <li><u>Schamroth sign</u>: This sign is elicited by placing the dorsal surfaces of terminal phalanges of corresponding right and left fingers together. Normal fingers create a diamond-shaped window when the dorsal surfaces of terminal phalanges of similar fingers are opposed to each other. <br> <br> <a href="clubbing_window.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> <br> <br></li>
+  
+<li><u>Profile sign or Lovibond's angle</u>:
+It is defined by the angle made by nail as it exists from the proximal nail fold. In normal subjects, it's usually less than 180°. Profile angle of greater than 180° can be used to differentiate true clubbing from simple nail curving and paronychia, which often produce an angle closer to 160°.
+</li>
+
+<li><u>Hyponychial angle</u>:
+It is constructed by drawing a line from distal digital crease to the cuticle and another line from the cuticle to hyponychium which is the thickened stratum corneum of epidermis lying under the free edge of the nail. Normal hyponychial angle is less than 192°. Hyponychial angle is a preferred objective criterion for clubbing because it is independent of age, sex, height, and weight of the patient</li>
+ <br> <br>
+<a href="clubbing.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> <br>
+</ul>
+
+<ul style="padding:8px;" type="square"><strong>Grading of clubbing</strong> <br>
+
+<li>Grade I Increased fluctuation of the nail bed<li>
+<li>Grade II Obliteration of the angle between nail and nail bed (Lovibond angle - normal 1600)</li>
+<li>Grade III Increased curvature of the nail resulting in a parrot beak or drumstick appearance</li>
+<li>Grade IV Hypertrophic osteoarthropathy, characterised by painful, tender, swelling of wrists (most common), ankles, elbows and knees</li>
+</ul>
+</div>
+
+<div onclick="showHide('edema')" class="topic" style="text-align:center; background:#068;">Edema</div>
+
+<div id="edema" style="text-align:left;" class="topicdrop" >
+Accumulation of excessive amount of fluid in the extravascular interstitial space of the body is called oedema.	
+<ol style="padding:12px;" type="i"><strong>Mechanism</strong> <br>
+<li>↑ capillary hydrostatic pressure (↑ Pc; heart failure)</li>
+<li>↓ plasma proteins (↓ πc; nephrotic syndrome, liver failure)</li>
+<li>↑ capillary permeability (↑ Kf; toxins, infections, burns)</li>
+<li>↑ interstitial fluid oncotic pressure (↑ πi; lymphatic blockage)</li>
+</ol>
+
+<strong>Types:</strong> <br> <br>
+A. <u>Pitting Edema</u>: due to protein-poor transudate.
+ <br>Inspection of the feet for the swelling.
+It is checked by applying firm pressure with the right
+thumb for at least 10-15 sec but not exceeding 30 seconds at the ankle above the medial
+malleolus, lower end of tibia or upper part of shin bone
+and then the pressure is released. Presence of a pit
+staying for >30 seconds indicates pitting oedema. <br> <br>
+CAUSES:<em>Mnemonic- CHILD</em> <br>
+<ul style="padding:8px;">
+<li><em>Cardiac Failure</em></li>
+<li><em>Hypoalbuminemia</em></li>
+<li><em>Insufficency (venous)</em></li>
+<li><em>Liver disease</em></li>
+<li><em>Drugs (Vasodilators, Androgenic)</em></li>
+</ul> <br> <br>
+B. <u>Non-Pitting Edema</u>: due to protein-rich transudate, exerts osmotic pressure causing fluid from surrounding to fill up the pit. <br> <br>
+CAUSES: <br>
+<ul  style="padding:8px;">
+<li>Myxedema: Generalized (Hypothyroidism) and Pretibial (Grave’s disease)<em><strong><br>
+</strong></em></li>
+<li>Lymphedema: Primary or secondary</li>
+<li>Angioneurotic/Qincke’s edema and urticaria</li>
+<li>Scleroderma</li>
+</ul>
+</div>
+
+<span style="color:#aaa; font-size:x-small;">Examination of respiration and temperature have been discussed in Systemic Examination and HOPI respectively.</span>
+
+</div>
+
+<div style="text-align:center; display:block; font-size:large; color:#ffffff" class="button" onclick="showHide('sysexam')">
+SYSTEMIC EXAMINATION
+</div>
+<div id="sysexam" class="drop" style="box-shadow:1px 1px 2px #000; background:#eeeeee; padding:3px; width:97%;">
+ <br>
+The standard approach is to carry out a general examination and then inspection &raquo; palpation &raquo; percussion &raquo; auscultation of the desired system except for CNS, where we do cranial nerve examination. Few important points have been highlighted. <br> <br>
+<div onclick="showHide('respsys')" class="topic" style="text-align:center; background:#223;">Respiratory</div>
+<div id="respsys" style="text-align:left;" class="topicdrop" >
+<span style="padding:4px; color:#c44;">After General Examination...</span>
+<h3><a name="chest_inspection">Inspection</a></h3><br>
+
+Pay particular attention to:
+
+<ol>
+  <li>General comfort, decubitus and breathing pattern of the patient. Do they appear distressed, 
+    diaphoretic, labored? Are the breaths regular and deep? 
+  </li>
+  <li>Use of accessory muscles of breathing (e.g. scalenes, sternocleidomastoids). 
+    Their use signifies some element of respiratory difficulty. 
+  </li><li>Breathing through pursed lips, often seen in cases of emphysema. 
+  </li><li>Ability to speak. At times, respiratory rates can be so high and/or work 
+    of breathing so great that patients are unable to speak in complete sentences. 
+
+  </li><li>Any audible noises associated with breathing as occasionally, wheezing or 
+    the gurgling caused by secretions in large airways are audible to the "naked" 
+    ear. 
+  </li><li>The direction of abdominal wall movement during inspiration by placing the hand on the patient's 
+    abdomen. Normally, the 
+    descent of the diaphragm pushes intra-abdominal contents down and the wall 
+    outward. In cases of severe diaphragmatic flattening (e.g. emphysema) or paralysis, 
+    the abdominal wall may move inward during inspiration, referred to as paradoxical 
+    breathing.
+  </li><li>Any obvious chest or spine deformities. These may arise as a result of chronic 
+    lung disease (e.g. emphysema), occur congenitally, or be otherwise acquired. 
+</ol>
+    <ul>
+      <li>Pectus excavatum: Congenital posterior displacement of lower aspect 
+        of sternum. This gives the chest a somewhat "hollowed-out" appearance. 
+  </li>
+     <li> Barrel chest: Associated with emphysema and lung hyperinflation.
+
+      </li><li>Spine abnormalities: kyphosis, scoliosis</li>
+   </ul>
+<br/><br/>
+   &nbsp; Emphysema: <a href="emphysema.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a>
+   
+<h3><a name="chest_palpation">Chest: palpation</a></h3>
+
+<ul>
+  <li>Ask pt if any part tender: examine that last.</li>
+  <li>Ribs (fracture).&nbsp;</li>
+</ul>
+
+<h3><a name="chest_palpation_expansion">Chest: palpation: expansion</a></h3>
+
+<ul>
+  <li>Pt leans forward, crossing arms to get scapula out of the way for palpation, percussion,
+    auscultation of back.</li>
+  <li>Pt lets their breath all the way out</li>
+  <li>Dr places palms on pt's back, thumbs together.</li>
+  <li>Pt breathes all the way in.</li>
+  <li>Dr records how far thumbs have spread, and whether 1 thumb moved less than the other.</li>
+  <li>Usual expansion is 4cm.</li>
+  <li>Alternatively: use a measuring tape.</li>
+</ul>
+
+<h3><a name="chest_palpation_vocal_fremitus">Chest palpation: vocal fremitus</a></h3>
+
+<ul>
+  <li>Ulnar edge of Dr's pronated, flattened hand slips into upper intercostal space.</li>
+  <li>Pt says "99".</li>
+  <li>Dr's hand moves to opposite side, and repeat down intercostal spaces.</li>
+  <li>Listening for a change in sensation:<br>
+  <ul><br>
+      <li>Increased fremitus (pneumothorax helping conduction).</li>
+      <li>Decreased fremitus (consolidation preventing conduction).</li>
+    </ul>
+  </li>
+</ul>
+
+<h3><a name="chest_percussion">Chest: percussion</a></h3>
+
+<ul>
+  <li>Percuss by comparing left to right each time as move from top to bottom of lung.</li>
+  <li>Supraclavicular region.</li>
+  <li>Back.</li>
+  <li>Tidal percussion (diaphragm paralysis).</li>
+  <li>DDx:<br>
+    • Dull: solid (liver, consolidated lung).<br>
+    • Stony dull [very dull]: fluid (pleural effusion).<br>
+    • Hyper-resonant: hollow (pneumothrorax, bowel).</li>
+</ul>
+
+<h3><a name="chest_auscultation">Chest: auscultation</a></h3>
+
+<ul>
+  <li>Have pt. cross arms. Ask pt. to "breath in and out, though your mouth, on your own
+    time".</li>
+  <li>Breath sounds.</li>
+  <li>Adventitious sounds.</li>
+</ul>
+
+<h3><a name="chest_auscultation_resonance">Chest: auscultation: resonance</a></h3>
+
+<ul>
+  <li>Pt says "99" each time Dr listens to each part of chest</li>
+  <li>Clearly heard aegophony speech [bleating goat] means consolidation.</li>
+  <li>Muffled is normal.</li>
+  <li>If aegophony, assess "whispering pectoriloquy":<br>
+    • Pt whispers "1,2,3,4".<br>
+    • See if can hear whisper clearly with stethoscope (extreme consolidation).</li>
+</ul>
+
+<h3><a name="anterior_chest">Anterior chest</a></h3>
+
+<ul>
+  <li>Palpate apex beat for presence, deviation.</li>
+  <li>Pemberton's sign (SVC obstruction):<br>
+    • Pt raises arms over head.<br>
+    • Pt develops facial plethora, non-pulsatile JVP elevation and inspiratory
+    stridor.&nbsp;</li>
+</ul>
+</div>
+
+<div onclick="showHide('gisys')" class="topic" style="text-align:center; background:#234;">Gastrointestinal</div>
+<div id="gisys" style="text-align:left;" class="topicdrop" >
+<span style="padding:4px; color:#c44;">After General Examination...</span><br/>
+<p style="background:#cde; display:block; font-size:small;">
+
+PEG: Percutaneous endoscopic gastrostomy
+AAA: Abdominal Aortic Aneurysm<br>
+RLQ: Right Lower Quadrant<br>
+RUQ: Right Upper Quadrant<br>
+SVC: Superior Vena Cava<br>
+IVC: Inferior Vena Cava<br>
+HTN: Hypertension<br>
+CA:  Cancer<br>
+R:   Right<br>
+L:   Left
+</p>
+</p>
+
+<h3><a name="abdomen_inspection">Inspection</a></h3>
+
+<ul>
+  <li>Pt is supine, abdomen visible from nipples to pubic symphysis.</li>
+  <li>Scars. See <i><a href="http://www.clinicalexam.com/pda/a_ref_abdominal_scars.htm">Abdominal Scar Reference</a></i>.</li>
+  <li>Stoma from surgery, trauma.</li>
+  <li>PEG (dysphagia, usu. 2º to neurological damage, like stroke).</li>
+  <li>Distension (<b>f</b>at, <b>f</b>etus, <b>f</b>eces, <b>f</b>latus, <b>f</b>luid, <b>f</b>ull-sized
+    tumors).</li>
+  <li>Local swellings (enlarged organs, hernia). Hernias can be made prominent by coughing test. See <i><a href="http://www.clinicalexam.com/pda/g_ref_mass_examination.htm">Examining
+    A Mass Reference</a></i>.</li>
+  <li>Pulsations (Abdominal Aortic Aneurysm).</li>
+  <li>Peristalsis visible (thin person, intestinal obstruction).</li>
+  <li>Skin:&nbsp;<br>
+    • Herpes zoster (abdominal pain).<br>
+    • Grey-Turner's sign [discolored skin] (acute pancreatitis).</li>
+  <li>Striae:<br>
+    • Regular striae (ascities, pregnancy, weight loss).<br>
+    • Purple, wide striae (Cushings).</li>
+  <li>Dilated veins location:<br>
+    • Anterior leg (IVC block).<br>
+    • Caput medusae (portal HTN).<br>
+    • Costal margin (normal).</li>
+  <li>Dilated vein flow direction. Test by occluding with fingers:<br>
+    • Flows superior (IVC block).<br>
+    • Flows inferior (SVC block).<br>
+    • Navel radiation (portal HTN).</li>
+  <li>Umbilicus:<br>
+    • Sister Joseph nodule (metastatic tumor).<br>
+    • Cullen's "black eye" (acute pancreatitis, extensive hemoperitoneum).</li>
+  <li>Groin: brown freckles (Peutz-Jeghers).</li>
+  <li>Squat to pt's stomach level, and watch for asymmetrical movement during breathing (mass,
+    large liver).</li>
+</ul>
+
+<h3><a name="palpate_general_abdomen">Palpate general abdominal</a></h3>
+
+<ul>
+  <li>Warm hands.</li>
+  <li>Ask pt if any part tender: examine that last.</li>
+  <li>Abdominal muscles relaxed, pt bends knees if necessary.</li>
+  <li>Light palpation.</li>
+  <li>Deep palpation.</li>
+  <li>Note rigidity, rebound tenderness, involuntary guarding (peritonitis).</li>
+  <li>Record mass characteristics. See <i><a href="http://www.clinicalexam.com/pda/g_ref_mass_examination.htm">Examining A
+    Mass Reference</a></i>.</li>
+  <li>Distinguish abdominal wall mass from intrabdominal mass:<br>
+    • Pt folds arms and sits halfway up.<br>
+    • Wall mass if size is same,&nbsp; tenderness same or greater.</li>
+</ul>
+
+<h3><a name="palpate_liver">Palpate liver</a></h3>
+
+<ul>
+  <li>Find edge:<br>
+    • Dr's R hand held still at base of RLQ, parallel to costal margin.<br>
+    • Ask pt. to breathe slowly.<br>
+    • During each inspiration, see if liver edge strikes radial edge of index finger.<br>
+    • During each expiration, Dr's hand moves superiorly 2cm.</li>
+  <li>Palpate liver surface, edge:<br>
+    • Hard vs. soft.<br>
+    • Regular vs. irregular.<br>
+    • Tender vs. not.<br>
+    • Pulsatile (tricuspid incompetence) vs. not.</li>
+  <li>Find top border by percussing down R midclavicular line [normal: 5th rib in
+    midclavicular line].</li>
+  <li>Calculate span [normal span: 12.5cm].</li>
+</ul>
+
+<h3><a name="palpate_gallbladder">Palpate gallbladder</a></h3>
+
+<ul>
+  <li>Dr's fingers placed perpendicular to R costal margin near midline, then moved medial to
+    lateral to palpate.</li>
+  <li>Do Murphy's sign: cessation of inspiration upon palpation.<br>
+    • Murphy's point: costal margin in midclavicular line.<br>
+    • Courvoisier's law: <b>S</b>tones= <b>s</b>tays <b>s</b>mall <b>s</b>ince <b>s</b>carred.</li>
+</ul>
+
+<h3><a name="palpate_spleen">Palpate spleen</a></h3>
+
+<ul>
+  <li>Bimanual technique:<br>
+    • Dr's L hand posterolaterally, below pt's L ribs, compressing on rib cage.<br>
+    • Dr's R hand below pt's umbilicus, parallel to L costal margin.<br>
+    • Advance R hand superiorly to L costal margin.<br>
+    • 1.5x-2x enlarged spleen is palpable.<br>
+    • If miss spleen, roll pt. towards Dr. (so pt lies on pt's R side) and repeat
+    palpation.</li>
+  <li>Alternatively: palpate like liver edge with just R hand, starting from RLQ diagonally
+    over to LUQ.</li>
+  <li>Alternatively: combine the two methods: start to palpate from RLQ like liver edge with
+    just R hand, but then as get closer, reach with L hand around to pt's L ribcage and pull,
+    while continuing advancing with R hand.&nbsp;</li>
+  <li>Assess spleen characteristics [these also help differentiate from kidney]:<br>
+    • Size<br>
+    • Shape, notch vs. no notch.<br>
+    • Percussion dullness vs. not.<br>
+    • Moves on respiration vs. not. <br><ul>
+      <li>Can get above it vs. not.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3><a name="palpate_kidneys">Palpate kidneys</a></h3>
+
+<ul>
+  <li>Dr's L heel of hand slipped under pt's R loin, L fingers under R back.</li>
+  <li>R hand held over RUQ.</li>
+  <li>Dr flexes L MCPs in renal angle.</li>
+  <li>Dr R hand feels strike as kidneys float anteriorly.&nbsp;</li>
+  <li>Repeat for other side.</li>
+</ul>
+
+<h3><a name="palpate_stomach">Auscultate stomach</a></h3>
+
+<ul>
+  <li>Perform on empty stomach.</li>
+  <li>Stethoscope on epigastrium.</li>
+  <li>Then shake both iliac crests.&nbsp;</li>
+  <li>While shaking, listen to splash from retained fluid.</li>
+  <li>Audible splash called "succussion splash" (ulcer or gastric CA).</li>
+</ul>
+
+<h3><a name="palpate_pancreas">Palpate pancreas</a></h3>
+
+<ul>
+  <li>Palpate for a round, fixed, swelling above umbilicus that doesn't move with inspiration
+    (pseudocyst, acute pancreatitis, CA in thin pt).</li>
+</ul>
+
+<h3><a name="palpate_aorta">Palpate aorta</a></h3>
+
+<ul>
+  <li>Palpate in midline, superior to umbilicus.</li>
+  <li>Dr's 2 fingers on outer margins of aorta, watch if if fingers diverge (AAA).</li>
+  <li>Normally felt in thin pt.</li>
+</ul>
+
+<h3><a name="palpate_bowel">Palpate bowel</a></h3>
+
+<ul>
+  <li>Sigmoid usu. palpable in severe constipation.</li>
+  <li>Whether indents (feces) or doesn't indent (masses).</li>
+  <li>Sometimes can feel CA, megarectum.</li>
+</ul>
+
+<h3><a name="palpate_bladder">Palpate bladder</a></h3>
+
+<ul>
+  <li>Ask pt when last urinated, and whether was complete emptying..</li>
+  <li>Usually palpable if full, usually not palpable if empty.</li>
+  <li>Look for palpable, empty bladder (swelling).</li>
+</ul>
+
+<h3><a name="palpate_testes">Palpate testes</a></h3>
+
+<ul>
+  <li>Atrophy (liver dz).</li>
+</ul>
+
+<h3><a name="abdomen_percussion">Abdomen: percussion</a></h3>
+
+<ul>
+  <li>Liver border for loss of of dullness (necrosis, perforated bowel).</li>
+  <li>Spleen for splenomegaly.</li>
+  <li>Kidneys.</li>
+  <li>Bladder for enlarged bladder, pelvic mass.</li>
+  <li>Percuss masses. See <i><a href="http://www.clinicalexam.com/pda/g_ref_mass_examination.htm">Examining A Mass Reference</a></i>.</li>
+</ul>
+
+<h3><a name="abdomen_percussion_ascites">Abdomen percussion: ascites</a></h3>
+
+<ul>
+  <li>Shifting dullness:<br>
+    • The Dr's percussing finger placed vertically, so Dr's finger pointing toward pt's
+    legs.<br>
+    • Starting at midline, percuss laterally to dullness on L flank, and mark site of
+    dullness with non-permanent marker.<br>
+    • Roll pt towards Dr., so pt now laying on R side.<br>
+    • Pt stays lying on R side for 30min, then repercuss while still lying on R side.<br>
+    • Ascites present if the dullness has moved medially (ie the point of dullness is now
+    resonant).<br>
+    • Optionally: percuss laterally on both R and L flanks, and mark both before rolling
+    pt, so can assess them both moving.</li>
+  <li>Dipping:&nbsp;<br>
+    • Flex MCP joint fast to displace fluid and palpate a mass.</li>
+  <li>Fluid thrill:<br>
+    • Dr. puts hands on each of pt's flanks.<br>
+    • If obese, pt places pt's lateral edge of hand, vertically on midline at umbicus.<br>
+    • Dr. flicks hand on right flank, by quickly flexing MCPs.<br>
+    • Ascites if Dr feels resulting thrill on left flank.</li>
+</ul>
+
+<h3><a name="abdomen_auscultation">Abdomen: auscultation</a></h3>
+
+<ul>
+  <li>Below umbilicus to assess bowel sounds for:<br>
+    • Rushing sound called "borborygmi" (diarrhea).<br>
+    • No sound for 3 minutes (ileus, paralysis).<br>
+    • "Tinkling" sound (obstructed bowel).</li>
+  <li>Above umbilicus for:<br>
+    • Abdominal Aortic Aneurysm bruit.<br>
+    • Venus hum [blood flowing in caput medusae] (portal HTN).</li>
+  <li>R and L above umbilicus for renal artery stenosis.</li>
+  <li>Over liver for:<br>
+    • Friction rub [grating during breathing] (peritonitis, Fitz-Hugh-Curtis, others).<br>
+    • Bruit (CA, alcoholic hepatitis).</li>
+  <li>Over spleen for splenic rub (splenic infarct).</li>
+  </ul>
+
+
+</div>
+
+<div onclick="showHide('cvssys')" class="topic" style="text-align:center; background:#245;">Cardiovascular</div>
+<div id="cvssys" style="text-align:left;" class="topicdrop" >
+<span style="padding:4px; color:#c44;">After General Examination...</span><br/>
+<h3><a name="mouth">Mouth</a></h3>
+<ul>
+  <li>Lips: central cyanosis.</li>
+  <li>Tongue underside: central cyanosis.</li>
+  <li>Tongue enlargement (amyloidosis).</li>
+  <li>Torch: high arch palate (Marfan's).</li>
+  <li>Breathing: dyspnea + wheezing (asthma, COPD, asthma, LV failure).</li>
+  <li>Breathing: Cheyne-Stokes breathing (stroke, CHF, sedation, uremia).</li>
+</ul>
+<h3><a name="neck">Neck</a></h3>
+<ul>
+
+  <li>Carotid: inspect for carotid pulsations.</li>
+  <li>Carotid: compress one carotid at a time [fingers behind neck, thumb at or
+    below cricoid cartilage level. Optionally use just L thumb to assess R
+    carotid--some teachers disapprove but carotid pulse outweighs thumb]. Assess:<br>
+    • Amplitude.<br>
+    • Contour of pulse.<br>
+    • Variations in amplitude.</li>
+  <li>Carotid: auscultate bruit:<br>
+    • Use bell of stethoscope.<br>
+    • Tell pt. to hold their breath while Dr listens.</li>
+</ul>
+<h3><a name="jvp">JVP</a></h3>
+<ul>
+  <li>JVP [use R one]: inspect height, character.</li>
+  <li>JVP: Kussmaul's sign [change on inspiration].</li>
+  <li>See <a href="http://www.clinicalexam.com/pda/c_ref_jvp.htm">JVP Reference</a> for more details.</li>
+</ul>
+<h3><a name="chest_inspection">Chest: inspection</a></h3>
+<ul>
+  <li>Scars, including mitral valvotomy laterally on L breast.</li>
+  <li>Deformities, dressings, stitches, etc.</li>
+  <li>Visible pulsations.</li>
+  <li>Apex beat.</li>
+</ul>
+<br>
+&nbsp; <a href="cvs.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a><br>
+
+<h3><a name="chest_palpation">Chest: palpation</a></h3>
+<ul>
+  <li>Ask pt. if any part is tender, examine that last.</li>
+  <li>Pacemaker boxes.</li>
+  <li>Palpate apex beat for presence, deviation, character. See <i><a href="http://www.clinicalexam.com/pda/c_ref_apex_beat.htm">Apex
+    Beat Reference</a></i>.</li>
+  <li>Parasternal impulse:<br>
+    • Heel of Dr's hand to L of sternum.<br>
+    • If RV, LA dilated, heel will lift on systole.</li>
+  <li>Thrills and heaves:<br>
+    • Dr's hand horizontal under R pectoral, then vertical up medial side R
+    pectoral, then horizontal across center of ribcage, below sternal notch.<br>
+    • Diastolic thrill: doesn't coincide with apex beat.<br>
+    • Systolic thrill: coincides with apex beat.</li>
+  <li>Pulmonary component of S2.</li>
+</ul>
+<h3><a name="chest_auscultation">Chest: auscultation</a></h3>
+<ul>
+  <li>Heart sounds, 1st, 2nd split.</li>
+  <li>Murmurs.</li>
+  <li>Time according to carotid pulse (atrial fibrillation: not all apex beats
+    become pulses).</li>
+  <li>Dynamic auscultation.</li>
+  <li>If systolic murmur, do Valsava maneuver (hypertrophic cardiomyopathy).</li>
+  <li>If mitral stenosis, hear thrill by rolling pt onto pt's&nbsp; L side
+    [brings apex closer to chest wall].</li><br>
+	
+</ul>
+
+
+<h3><a name="abdomen">Abdomen</a></h3>
+<ul>
+  <li>Liver: find, examine edge.<br>
+  <li>Liver: pulsatile liver (tricuspid regurgitation).</li>
+  <li>Splenomegaly (endocarditis).</li>
+  <li>Abdominal Aortic Aneurysm.</li>
+</ul>
+<h3><a name="legs">Legs</a></h3>
+<ul>
+  <li>Inspect: edema.</li>
+  <li>Inspect: peripheral vascular disease.<br>
+    • May also see marks of pt squeezing thigh to increase perfusion.</li>
+  <li>Femoral pulse.</li>
+  <li>Varicose veins. See <i><a href="http://www.clinicalexam.com/pda/c_varicose_veins.htm">Varicose Veins
+    Examination</a></i>.</li>
+</ul>
+</div>
+
+<div onclick="showHide('cnssys')" class="topic" style="text-align:center; background:#256;">CNS Examination</div>
+<div id="cnssys" style="text-align:left;" class="topicdrop" >
+<span style="padding:4px; color:#c44;">After General Examination...</span><br/>
+
+<h3><a name="consciousness">Consciousness</a></h3>
+<p style="font-weight:bold;"><u>Glasgow Coma Scale</u></p>
+<h4 style="color:#a00;">Eye opening</h4>
+4: Spontaneous<br>
+3: To command<br>
+2: To pain<br>
+1: None
+<h4 style="color:#a00;">Verbal response</h4>
+5: Oriented (with respect to time, place and person)<br>
+4: Confused conversation<br>
+3: Inappropriate words<br>
+2: Incomprehensible<br>
+1: None
+<h4 style="color:#a00;">Motor response</h4>
+6: Obeys command<br>
+5: Localizes pain<br>
+4: Withdraws from pain<br>
+3: Abnormal flexion to pain<br>
+2: Extension response to pain<br>
+1: None
+
+
+
+
+<h3><a name="general_appearance">General appearance</a></h3>
+
+<ul>
+  <li>Age of pt. (Parkinson's usu. 45+, etc).</li>
+  <li>Chorea (Huntington's, rheumatic fever, drugs, etc).</li>
+  <li>Ethnicity (scandinavian: multiple sclerosis).</li>
+  <li>Ballisma, dystonia (usu. drugs), noticeable tremor.</li>
+  <li>Posture: leaning to one side (hemiplegia).</li>
+  <li>Posture: stooped forward (Parkinson's).</li>
+  <li>Only using one hand on tray (hemiplegia).</li>
+</ul>
+
+<h3><a name="handedness_speech">Handedness, speech</a></h3>
+
+<ul>
+  <li>Ask to shake hand, ask if R or L-handed.</li>
+  <li>If detect abnormality while pt. talks, See <i><a href="http://www.clinicalexam.com/pda/n_ref_speech_disorders.htm">Speech
+    Disorders Reference</a></i>.</li>
+</ul>
+
+<h3><a name="head">Head</a></h3>
+
+<ul>
+  <li>Asymmetry, unilateral facial drooping (stroke).</li>
+  <li>Ptosis.</li>
+  <li>Serpentine stare (Parkinson's).</li>
+  <li>Licking of lips.</li>
+  <li>Scars of previous operations.</li>
+  <li>Trauma, injury, abnormalities.&nbsp;</li>
+  <li>Mental retardation syndrome facies: Down's, FAS, etc.</li>
+  <li>Eyes: exophthalamos (thyroxicosis), Kayser-Fleisher rings (Wilson's).</li>
+</ul>
+
+<h3><a name="neck_stiffness">Neck, neck stiffness</a></h3>
+
+<ul>
+  <li>Neck: thymectomy scar (MG).</li>
+  <li>Neck: thyroidectomy scar (thyrotoxicosis).</li>
+  <li>Beware of performing manipulation on a cervical spine injury pt.</li>
+  <li>Hand under occiput, flex neck to chin and see if resistance.<br>
+    • Resistance causes: raised ICP, cervical fusion or spondylosis, Parkinson's
+    meningitis.</li>
+  <li>If suspect meningitis (fever, photophobia) do Kernig's sign.</li>
+</ul>
+
+<h3>Cranial nerves</h3>
+See <a href="#cranial" style="color:#ffffff; background:#268; padding:2px;">Cranial Nerve Examination</a> Section
+
+<h3><a name="upper_limbs">Upper limbs</a></h3>
+
+<p>The upper/lower limb exams checklist is a <strong>SCRIPT</strong>:
+
+</p><ul>
+  <li><strong>S</strong>ensation</li>
+  <li><strong>C</strong>oo<strong>r</strong>dination</li>
+  <li><strong>I</strong>nspection</li>
+  <li><strong>P</strong>ower</li>
+  <li><strong>T</strong>one</li>
+</ul>
+
+<p>But just reassemble them back into a logical order: inspection always goes first;
+sensation goes last since takes so long.</p>
+
+<h3><a name="upper_limbs_inspect">Upper limbs: inspect</a></h3>
+
+<ul>
+  <li>Pt sits over side of bed facing Dr.</li>
+  <li>For rest of examination, comparing L side to R side.</li>
+  <li>Asymmetry.</li>
+  <li>Deformities: wrist drop, waiter's tip, claw hand.</li>
+  <li>Muscle wasting, fasciculations. Include shoulder girdle.</li>
+  <li>Tremor:<br>
+    • Intention (cerebellar).<br>
+    • Resting with pill-rolling (Parkinson's).<br>
+    • Action tremor (<b>BAT:&nbsp; B</b>enign essential tremor syndrome, <b>A</b>nxiety, <b>T</b>hyrotoxicosis).</li>
+  <li>Feel hand for heat (thryrotoxicosis), grip.</li>
+  <li>Pronator drift: pt's eyes closed, arms extended, with palms up. Tap pt's arms briskly
+    downward (arm drifting into pronation: UMNL, cerebellar, post. column loss).</li>
+  <li>Pseudoathetosis from proprioceptive loss.</li>
+  <li>Muscle bulk, tenderness.</li>
+</ul>
+
+<h3><a name="upper_limbs_tone">Upper limbs: tone</a></h3>
+
+<ul>
+  <li>Ask pt. if any tenderness in any joints, so won't hurt them when manipulating them for
+    tone.</li>
+  <li>Grasp under elbow and wrist, and rotate the 2 joints to assess resistance.<br>
+    • If Parkinson's, cogwheel rigidity in wrist [combination of tremor and increased
+    tone].<br>
+    • If Parkinson's, lead pipe resistance when flexing forearm.</li>
+  <li>If ulnar nerve indicated, Froment's sign:<br>
+    • Give pt a piece of paper for each hand.<br>
+    • Ask pt to grasp papers by moving straightened thumb to radial side of index finger.<br>
+    • Affected thumb is forced to flex at interphalangeal joint to grip paper.</li>
+  <li>If median nerve indicated, pen touching test:<br>
+    • Pt's hand supine.<br>
+    • Dr. hold's pen above thumb<br>
+    • Ask pt. to lift thumb to touch it.<br>
+    • Affected thumb can't touch pen.&nbsp;</li>
+</ul>
+
+<h3><a name="upper_limbs_power">Upper limbs: power</a></h3>
+
+<ul>
+  <li>Assess shoulder, elbow, wrist, fingers.<br>
+    • Assess by ability to push against Dr's hand.<br>
+    • Assess across a single joint at a time [eg: Dr's hand on bicep, not forearm, to
+    assess shoulder power].&nbsp;</li>
+  <li>If MG (Myasthenia Gravis) suspected:<br>
+    • Pt. holds arms above head.<br>
+    • MG pt. will lose power after contractions.</li>
+</ul>
+
+<h3><a name="upper_limbs_reflexes">Upper limbs: reflexes</a></h3>
+
+<ul>
+  <li>Supinator/Brachioradialis (C5-6).</li>
+  <li>Biceps (C5-6).</li>
+  <li>Triceps (C7-8).</li>
+  <li>Fingers (C7-T1).</li>
+  <li>See <i><a href="http://www.clinicalexam.com/pda/n_ref_deep_tendon_reflexes.htm#upper_limb_reflexes">Deep Tendon Reflexes
+    Reference</a></i>.</li>
+</ul>
+
+<h3><a name="upper_limbs_coordination">Upper limbs: coordination</a></h3>
+
+<ul>
+  <li>Pt. finger touches Dr's fingers, then to pt's nose testing for dysdiadochokinesia,
+    rebound.</li>
+  <li>Dysdiadochokinesia:<br>
+    • Pt's palm on dorsum of their opposite hand.<br>
+    • Pt flips their hand quickly so the two hand dorsums touch.<br>
+    • Repeat quickly.</li>
+</ul>
+
+<h3><a name="upper_limbs_sensory">Upper limbs: sensory</a></h3>
+
+<ul>
+  <li>Dorsal columns (vibration):<br>
+    • Place on sternum [the last area lost] so pt. knows how the buzzing feels.<br>
+    • Pt's eyes shut and 128 Hz fork on distal interphalangeal joint: ask if felt.<br>
+    • If can feel, ask pt. to say when it stops, then later stop it.<br>
+    • If deficient: assess dermatomes at wrist, elbow, shoulder, both anterior and
+    posterior.<br>
+  <li>Dorsal columns (proprioception):<br><ul>
+      <li>Grasp pt's distal phalynx, move up and down to show what to do.</li>
+      <li>Tell pt to close eyes.</li>
+      <li>Repeat the moving up or down, then leave it either up or down.</li>
+      <li>Ask pt is whether it's up or down.</li>
+    </ul>
+  </li>
+  <li>Spinothalamic (pain, forget temperature):<br>
+    • Sterile toolpick or broken wood tongue depressor on forehead or anterior chest.<br>
+    • Pt. closes eyes, tells if sharp or dull.<br>
+    • Stick each dermatome looking for cord, dermatome, peripheral nerve, stocking glove.</li>
+  <li>Light touch: cotton wool. Dab skin lightly, don't stroke.</li>
+  <li>If lesion, feel for thickened nerves:<br>
+    • Ulnar at elbow<br>
+    • Median at wrist<br>
+    • Radial at wrist<br>
+    • Axilla.</li>
+</ul>
+
+<h3><a name="lower_limbs_inspect">Lower limbs: inspect</a></h3>
+
+<ul>
+  <li>Asymmetry.</li>
+  <li>Muscle wasting, fasciculations, tremor.</li>
+  <li>Muscle bulk: quads, anterior tibials.</li>
+  <li>Foot bruising, infections from peripheral neuropathy.</li>
+</ul>
+
+<h3><a name="lower_limbs_tone">Lower limbs: tone</a></h3>
+
+<ul>
+  <li>Orthopods may roll legs for a quick preliminary inspection of tone.</li>
+  <li>Tone of knees, ankles.</li>
+  <li>Test knee clonus by pushing lower end of quads sharply down towards knee (sustained
+    contractions: UMNL).</li>
+</ul>
+
+<h3><a name="lower_limbs_power">Lower limbs: power</a></h3>
+
+<ul>
+  <li>Power: hips, knees, ankles. "Lift leg, don't let me push it down". "Push
+    leg down, don't let me push it up".</li>
+</ul>
+
+<h3><a name="lower_limbs_reflexes">Lower limbs: reflexes</a></h3>
+
+<ul>
+  <li>Knee (L3-4).</li>
+  <li>Ankles (S1-2).</li>
+  <li>Plantar (L5, S1-2).</li>
+  <li>Ankle clonus test:<br>
+    • Place pt's knee bent, thigh externally rotated.<br>
+    • Dr lifts pt's heel in Dr's cupped hand.<br>
+    • Dr quickly dorsiflexes pt's ankle and holds it flexed for 3 seconds.<br>
+    • Clonus if sustained movement afterwards.</li>
+  <li>See <i><a href="http://www.clinicalexam.com/pda/n_ref_deep_tendon_reflexes.htm#lower_limb_reflexes">Deep Tendon Reflexes
+    Reference</a></i>.</li>
+</ul>
+
+<h3><a name="lower_limbs_coordination">Lower limbs: coordination</a></h3>
+
+<ul>
+  <li>Heel-shin test:<br>
+    • Pt kicks a heel out, then touches that heel to other shin.<br>
+    • Repeat in a smooth motion loop.<br>
+    • Alternatively: heel sliding up and down on opposite shin.</li>
+  <li>Toe-touching test.</li>
+  <li>Tapping of feet.</li>
+</ul>
+
+<h3><a name="lower_limbs_gait">Lower limbs: gait</a></h3>
+
+<ul>
+  <li>Walk few feet then walk back.</li>
+  <li>Notice signature gaits:<br>
+    • Trendelenberg gait (proximal myopathy).<br>
+    • Shuffling gait (Parkinson's).<br>
+    • High-stepping gait (foot drop).<br>
+    • Hemiplegic gait [swinging one leg in lateral arc] (usu. stroke).</li>
+  <li>Walk heel to toe (hard: midline cerebellar).</li>
+  <li>Walk on heels (hard: L4-5 footdrop).</li>
+  <li>Squat or sit then stand up (proximal myotrophy).</li>
+  <li>Romberg sign positive if unsteadiness is worse when eyes closed.</li>
+</ul>
+
+<h3><a name="lower_limbs_sensory">Lower limbs: sensory</a></h3>
+
+<ul>
+  <li>Sensory pin prick, vibration, proprioception, light touch. Same as was for <i><a href="#upper_limbs_sensory">Upper Limbs</a></i>.</li>
+  <li>Examine sensation in saddle region.</li>
+</ul>
+
+<h3><a name="spine">Spine</a></h3>
+
+<ul>
+  <li>Back: deformity, scars, neurofibromas.</li>
+  <li>Palpate for tenderness over vertebral bodies.</li>
+  <li>Straight leg raising test:<br>
+    • Pt tries to lift straight leg.<br>
+    • Full lifting will be prevented if slipped disc.</li>
+
+</ul>
+
+
+<div style="text-align:center; background:#268; border-radius:1em; margin-left:auto; margin-right:auto; color:#ffffff; box-shadow:#666 0px 0px 2px; display:block; width:96%; padding:4px; margin-top:2px;" onclick="showHide('cnex')" id="cranial">Cranial Nerve Examination</div>
+<div id="cnex" style="text-align:left; border-radius:4px;" class="topicdrop" >
+<h4><a name="setup">Setup</a></h4>
+
+<ul>
+  <li>Patient sitting over edge of bed.</li>
+</ul>
+
+<h4><a name="cn_i">CN I</a>: Olfactory</h4>
+
+<ul>
+  <li>Usually not tested.</li>
+  <li>Rash, deformity of nose.</li>
+  <li>Test each nostril with essence of incense sticks, lemon, orange, eucalyptus etc.</li>
+</ul>
+
+<h4><a name="cn_ii">CN II</a>: Optic</h4>
+
+<ul>
+  <li>With patient wearing glasses, test each eye separately on eye chart/ card using an eye
+    cover.</li>
+  <li>Examine visual fields by confrontation by wiggling fingers 1 foot from pt's ears, asking
+    which they see move.<br>
+    • Keep examiner's head level with patient's head.</li>
+  <li>If poor visual acuity, map fields using fingers and a quadrant-covering card.</li>
+  <li>Look into fundi.</li>
+  <li>For more detail, See <i><a href="http://www.clinicalexam.com/pda/n_eye.htm">Eye Exam</a>.</i></li>
+</ul>
+
+<h4><a name="cn_iii-iv-vi">CN III, IV, VI</a>: Oculomotor, Trochlear, Abducens</h4>
+
+<ul>
+  <li>Look at pupils: shape, relative size, ptosis.</li>
+  <li>Shine light in from the side to gauge pupil's light reaction.<br>
+    • Assess both direct and consensual responses.<br>
+    • Assess afferent pupillary defect by moving light in arc from pupil to pupil.
+    unne).&nbsp;Optionally: as do arc test, have pt place a flat hand extending vertically
+    from his face, between his eyes, to act as a blinder so light can only go into one eye at
+    a time.</li>
+  <li>"Follow finger with eyes without moving head": test the 6 cardinal points in
+    an H pattern.<br>
+    • Look for failure of movement, nystagmus [pause to check it during upward/ lateral
+    gaze].</li>
+  <li>Convergence by moving finger towards bridge of pt's nose.</li>
+  <li>Test accommodation by pt looking into distance, then a hat pin 30cm from nose.</li>
+  <li>If MG (Myasthenia Gravis) suspected: pt. gazes upward at Dr's finger to show worsening ptosis.</li>
+</ul>
+
+<br>
+<a href="cnex.jpg" style="color:#fff; background:#05a; box-shadow:#444 0px 0px 2px; padding:5px;"/>View Image</a> <br>
+
+<h4><a name="cn_v">CN V</a>: Trigeminal</h4>
+
+<ul>
+  <li>Corneal reflex: patient looks up and away.<br>
+    • Touch cotton wool to other side.<br>
+    • Look for blink in both eyes, ask if can sense it.<br>
+    • Repeat other side [tests V sensory, VII motor].</li>
+  <li>Facial sensation: sterile sharp item on forehead, cheek, jaw.<br>
+    • Repeat with dull object. Ask to report sharp or dull.<br>
+    • If abnormal, then temperature [heated/ water-cooled tuning fork], light touch
+    [cotton].</li>
+  <li>Motor: pt opens mouth, clenches teeth (pterygoids).<br>
+    • Palpate temporal, masseter muscles as they clench.</li>
+  <li>Test jaw jerk:<br><ul>
+      <li>Dr's finger on tip of jaw.</li>
+      <li>Grip patellar hammer halfway up shaft and tap Dr's finger lightly.</li>
+      <li>Usually nothing happens, or just a slight closure. </li>
+      <li>If increased closure, think UMNL, esp&nbsp; pseudobulbar palsy.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4><a name="cn_vii">CN VII</a>: Facial</h4>
+
+<ul>
+  <li>Inspect facial droop or asymmetry.</li>
+  <li>Facial expression muscles: pt looks up and wrinkles forehead.<br>
+    • Examine wrinkling loss.<br>
+    • Feel muscle strength by pushing down on each side [<i><a href="n_mnl.gif">UMNL</a></i>
+    preserved because of bilateral innervation].</li>
+  <li>Pt shuts eyes tightly: compare each side.</li>
+  <li>Pt grins: compare nasolabial grooves.</li>
+  <li>Also: frown, show teeth, puff out cheeks.</li>
+</ul>
+
+<h4><a name="cn_viii">CN VIII</a>: Vestibulocochlear (Hearing, Vestibular rarely)</h4>
+
+<ul>
+  <li>Dr's hands arms length by each ear of pt.<br>
+    • Rub one hand's fingers with noise on one side, other hand noiselessly.<br>
+    • Ask pt. which ear they hear you rubbing.<br>
+    • Repeat with louder intensity, watching for abnormality.</li>
+  <li>Weber's test: Lateralization<br>
+    • 512/ 1024 Hz [256 if deaf] vibrating fork on top of patients head/ forehead.<br>
+    • "Where do you hear sound coming from?"<br>
+    • Normal reply is midline.</li>
+  <li>Rinne's test: Air vs. Bone Conduction<br>
+    • 512/ 1024 Hz [256 if deaf] vibrating fork on mastoid behind ear. Ask when stop
+    hearing it.<br>
+    • When stop hearing it, move to the patients ear so can hear it.<br>
+    • Normal: air conduction [ear] better than bone conduction [mastoid].</li>
+  <li>If indicated, look at external auditory canals, eardrums.</li>
+</ul>
+
+<h4><a name="cn_ix-x">CN IX, X</a>: Glossopharyngeal, Vagus</h4>
+
+<ul>
+  <li>Voice: hoarse or nasal.</li>
+  <li>Pt. swallows, coughs (bovine cough: recurrent laryngeal).</li>
+  <li>Examine palate for uvular displacement. (unilateral lesion: uvula drawn to normal side).</li>
+  <li>Pt says "Ah": symmetrical soft palate movement.</li>
+  <li>Gag reflex [sensory IX, motor X]:<br>
+    • Stimulate back of throat each side.<br>
+    • Normal to gag each time.</li>
+</ul>
+
+<h4><a name="cn_xi">CN XI</a>: Accessory</h4>
+
+<ul>
+  <li>From behind, examine for trapezius atrophy, asymmetry.</li>
+  <li>Pt. shrugs shoulders (trapezius).</li>
+  <li>Pt. turns head against resistance: watch, palpate SCM on opposite side.</li>
+</ul>
+
+<h4><a name="cn_xii">CN XII</a>: Hypoglossal</h4>
+
+<ul>
+  <li>Listen to articulation.</li>
+  <li>Inspect tongue in mouth for wasting, fasciculations.</li>
+  <li>Protrude tongue: unilateral deviates to affected side.</li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+<div style="text-align:center; display:block; font-size:large; color:#ffffff" class="button" onclick="showHide('commdisord')" id="commcond">
+COMMON CONDITIONS
+</div>
+<div id="commdisord" class="drop" style="box-shadow:1px 1px 2px #000; text-align:left; background:#eeeeee; padding:3px; width:97%;">
+ <br>
+<em style="color:#aaa;">When taking a history...</em>
+ <div style="text-align:center; background:#268; border-radius:1em; margin-left:auto; margin-right:auto; color:#ffffff; box-shadow:#666 0px 0px 2px; display:block; width:96%; padding:4px; margin-top:2px;" onclick="showHide('fever')">For Fever Cases</div>
+<div id="fever" style="width:96%;" class="topicdrop">
+<strong>Fever</strong> or <strong>pyrexia</strong> refers to an elevated body temperature(> 99°F or >37.2°C). <br> <br>
+
+In fever we ask the onset, progression, time and exacerbating/relieving factors just like in pain but here emphasis is laid upon the severity and types of fever. <br> <br>
+<strong>Severity:</strong> Low grade (<101°F or 38°C), moderate grade (<103°F) and high grade(>103°F). <br> <br>
+Fever may be of 3 types: <br>
+I.<u>Continuous</u>: when it does not fluctuate >1°C (1.5°F) during 24 hours and at no time touches the normal. It's seen in  lobar pneumonia, typhoid, UTI, infective endocarditis. <br>
+II.<u>Remittent</u>: when it fluctuates >1°C (1.5°F) but does not touch normal. It's seen in typhoid and  infective endocarditis. <br>
+III.<u>Intermittent</u>: when it touches normal and rises again. Seen in malaria, pyemia and septicaemia. <br> <br>
+<strong>Types of malarial fever </strong> <br>
+<p align="left">1.&nbsp;<strong>Benign tertian</strong> (<em>P vivax</em> and <em>P ovale</em>) with a fever every 2nd day.</p>
+<p align="left">2.&nbsp;<strong>Benign quartan</strong> (<em>P malariae</em>) with a fever every 3rd day.</p>
+<p align="left">3.&nbsp;<strong>Malignant tertian</strong> (<em>P falciparum</em>), the fever is usually continuous or only briefly remittent. There is no wet stage. <br> <br>
+Note:We also ask if the fever resolves gradually(lysis) or suddenly from peak temperature within an hour (crisis). <br> <br>
+
+<strong>Normal body temperature</strong> <br>
+The average oral temperature = 37.1°C (98.6°F). <br>In early morning, it may fall as low as 96°F (35.8°C)
+and in the evening it may rise to 99.0°F (37.2°C). Rectal
+temperature is higher than oral temperature by approx 0.5°C (0.7 to 0.9°F). 
+In contrast, the axillary temperature is lower than oral temperature
+by approximately 1°C, hence, is considered less accurate
+than other two measurements.</br/> <br>
+<strong>FEVER WITH CHILLS AND RIGOR</strong> <br>
+<strong style="color:#a00;">MUST</strong>: <strong style="color:#a00;">M</strong>alaria, <strong style="color:#a00;">U</strong>TI, <strong style="color:#a00;">S</strong>epticaemia, <strong style="color:#a00;">T</strong>hrombophlebitis. Also SBE and Pneumococcal infection (Basically any suppurative infection in the body).
+</div>
+
+
+<div style="text-align:center; background:#379; border-radius:1em; margin-left:auto; margin-right:auto; color:#ffffff; box-shadow:#666 0px 0px 2px; display:block; width:96%; padding:4px; margin-top:2px;" onclick="showHide('resphopi')">Resp. Symptoms</div>
+<div id="resphopi" style="width:96%; text-align:left;" class="topicdrop">
+<strong>1. Cough</strong>: The cough is the most frequent symptom of respiratory disease.
+ <br>
+Characteristics of Cough <br>
+a.<u>Bronchitis</u>: Dry or productive, worse in the mornings. <br>
+b.<u>Asthma</u>: Dry or productive, worse at night. <br>
+c.<u>Bronchial carcinoma</u>: Persistent, usually with haemoptysis. <br>
+d.<u>Pneumonia</u>: Initially dry, later productive with or without blood tinge. <br>
+e.<u>Bronchiectasis</u>: Productive, copious in amount, postural relationship (change in posture induces sputum production). <br>
+f.<u>Pulmonary oedema</u>: Productive with pink frothy sputum, often at night, associated dyspnoea, orthopnoea, PND and crackles. <br>
+g.<u>Interstitial lung disease</u>: Dry, irritant and distressing cough. <br> <br>
+
+<strong>2. Sputum</strong>:
+<h4 style="color:#888;">Clear, White, Gray Sputum</h4>
+<p><strong>Clear sputum</strong></p>
+<ul style="padding:4px;" type="none">
+<li><strong>Pulmonary edema</strong> (<strong>fluid in the lungs</strong>) – clear, white or pink frothy sputum</li>
+<li><strong>Viral respiratory tract infections</strong> – clear to white (acute)</li>
+<li><strong>Chronic bronchitis</strong> (COPD) – clear to gray</li>
+<li><strong>Asthma</strong> – white to yellow (thick)</li>
+</ul>
+<h4 style="color:#aa4;">Yellow Sputum</h4>
+<p><strong>Yellow colored sputum</strong> is due to the presence of WBCs (neutrophils and eosinphils) in chronic inflammation, allergy & infections.</p>
+<ul style="padding:4px;" type="none">
+<li><strong>Acute bronchitis</strong> – white to yellow</li>
+<li><strong>Acute pneumonia</strong> – white to yellow</li>
+<li><strong>Asthma</strong> – white to yellow (thick)</li>
+</ul>
+<h4 style="color:#4a4;">Green Sputum</h4>
+<p><strong>Green mucus</strong> is indicative of a long-standing, possibly chronic, infection due to breakdown of neutrophils and release of verdoperioxidase / myeloperioxidase. With infections, the <strong>green sputum</strong> will be more purulent while in non-infectious inflammatory conditions, the <strong>green sputum</strong> will be more mucoid.</p>
+<ul style="padding:4px;" type="none">
+<li><strong>Pneumonia</strong> – white, yellow or green</li>
+<li><strong>Lung abscess</strong> – green, sudden accumulation of large amount of sputum if the abscess ruptures</li>
+<li><strong>Chronic bronchitis</strong> – clear, grey to green (infection)</li>
+<li><strong>Bronchiectasis</strong>, <strong>cystic fibrosis</strong> – green</li>
+</ul>
+<h4 style="color:#600;">Brown and Black Sputum</h4>
+<p><strong>Brown or black sputum</strong> is an indication of ‘old blood’ and the color may be due to hemolysis. Certain organic and non-organic dusts may also cause a <strong>brown</strong> to <strong>black</strong> discoloration of sputum.</p>
+<ul style="padding:4px;" type="none">
+<li><strong>Chronic bronchitis</strong> – green, yellow, brown (infection)</li>
+<li><strong>Chronic pneumonia</strong> – white, yellow, green to brown</li>
+<li><strong>Coal worker’s pneumoconiosis</strong> – brown to black</li>
+<li><strong>Tuberculosis</strong> – red to brown or black</li>
+<li><strong>Lung cancer</strong> – red to brown to black</li>
+</ul>
+<h4 style="color:#a44;">Red, Pink and Rust-Colored Sputum</h4>
+<p><strong>Red sputum</strong> is usually an indication of whole blood that is more profuse than bleeding in pink colored sputum. Rust colored sputum is also due to the bleeding accompanied by haemolysis due to clotting process.</p>
+<ul style="padding:4px;" type="none">
+<li><strong>Pneumococcal pneumonia</strong> – rusty-red</li>
+<li><strong>Lung cancer </strong>&#8211; pink to red (frothy) progressing to brown or black</li>
+<li><strong>Tuberculosis</strong> – bright red streaks progressing to fully red sputum (hemoptysis)</li>
+<li><strong>Pulmonary embolism</strong> – bright red blood (acute)</li>
+
+<a href="http://medicalopedia.org/1175/meaning-of-different-sputum-colors/" style="font-size:small; color:#aaa;">Source: medicalopedia.org</a>
+</ul>
+ <br>
+<strong>3. Chest Pain</strong>: <br> <br>
+
+
+<br>
+<ul style="padding:4px;" type="none">Respiratory Causes:
+<li><a href="https://en.m.wikipedia.org/wiki/Bronchitis" title="Bronchitis">Bronchitis</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Pulmonary_embolism" title="Pulmonary embolism">Pulmonary embolism</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Pneumonia" title="Pneumonia">Pneumonia</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Hemothorax" title="Hemothorax">Hemothorax</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Pneumothorax" title="Pneumothorax">Pneumothorax</a> and <a href="/wiki/Tension_pneumothorax" title="Tension pneumothorax" class="mw-redirect">Tension pneumothorax</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Pleurisy" title="Pleurisy">Pleurisy</a> - an inflammation that can cause painful respiration</li>
+<li><a href="https://en.m.wikipedia.org/wiki/Tuberculosis" title="Tuberculosis">Tuberculosis</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Tracheitis" title="Tracheitis">Tracheitis</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Lung_cancer" title="Lung cancer">Lung malignancy</a></li>
+</ul> <br>
+
+Also see <span style="color:#a00;"><strong>Dyspnoea</strong></span> and <span style="color:#a00;"><strong>NYHA grading</strong></span> in Point <strong>2</strong> of <span style="background:#268; border-radius:1em; color:#ffffff; padding:2px;">CVS Symptoms</span>
+<br><br>
+&nbsp;<a href="http://radiologymasterclass.co.uk/tutorials/chest/chest_pathology/chest_pathology_page1" style="color:#fff; background:#a00; box-shadow:#444 0px 0px 2px; padding:5px;"> X-ray Images </a> <br> <br>
+</div>
+
+<div style="text-align:center; background:#268; border-radius:1em; margin-left:auto; margin-right:auto; color:#ffffff; box-shadow:#666 0px 0px 2px; display:block; width:96%; padding:4px; margin-top:2px;" onclick="showHide('cvshopi')">CVS Symptoms</div>
+<div id="cvshopi" style="width:96%;" class="topicdrop">
+
+
+<strong>1. Common</strong>: <br>
+<ul>
+<li> Dyspnoea </li>
+<li> Palpitation (due to tachycardia/fibrillation) </li>
+<li> Fatigue (heart failure, MI, CAD, Hypertension) </li>
+<li> Syncope (hypotension, panic reaction) </li>
+<li> Cyanosis (heart failure, sluggish circulation) </li>
+<li> Oedema (pitting bipedal oedema in CCF) </li> 
+<li> Cough (in LVF/mitral stenosis resulting in pulmonary edema with pink frothy sputum) </li>
+<li> Chest pain </li>
+<li> Haemoptysis </li>
+</ul>
+ <br>
+<strong>2. Dyspnea NYHA Grading</strong>: <br>
+<span style="color:#666; font-size:small;">(NYHA= New York Heart Association)</span> <br>
+<ul style="padding:8px;" type="none">
+<li> <strong>Grade I:</strong> Cardiac disease without dyspnea in ordinary physical activity.</li>
+<li> <strong>Grade II:</strong> Dyspnea during ordinary activity.</li>
+<li> <strong>Grade III:</strong> Dyspnea during less than ordinary activity, but comfortable at rest.</li>
+<li> <strong>Grade IV:</strong> Dyspnea at rest.</li>
+</ul>
+
+ <br>
+<strong>Orthopnea:</strong> (within 1-2 mins after assuming recumbency) dyspnea while recumbent, is due fluid redistribution from the lower extremities into the chest with a resultant increase in pulmonary capillary hydrostatic pressure. It's seen in acute LVF and severe CCF <br>
+
+<strong>Paroxysmal nocturnal dyspnea (PND):</strong> (within 2-5hrs after the onset of sleep) is a sudden-onset of severe shortness of breath and coughing, awakening the patient. <br>
+
+Factors that produce PND include: <br>
+
+1. Depression of respiratory center during sleep (decreases arterial oxygen) <br>
+
+2. Decreased sympathetic tone on heart after 2-5 hrs of sleep (hence decreased cardiac output) <br>
+
+3. Redistribution of fluid to the chest. <br>
+
+ <br><span style="color:#666; font-size:small;">CCF= Congestive Cardiac Failure; LVF= Left Ventricular Failure; CAD= Coronary Artery Disease; MI=Myocardial Infarction;</span> <br>
+<strong>3. Chest Pain</strong>: <br>
+
+<ul style="padding:8px;" type="none">Cardiovascular causes: <br>
+<li>1. <a href="https://en.m.wikipedia.org/wiki/Acute_coronary_syndrome" title="Acute coronary syndrome">Acute coronary syndrome</a></li>
+<ul>
+<li><a href="https://en.m.wikipedia.org/wiki/Unstable_angina" title="Unstable angina">Unstable angina</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Myocardial_infarction" title="Myocardial infarction">Myocardial infarction</a> ("heart attack")</li>
+</ul>
+
+<li>2. <a href="https://en.m.wikipedia.org/wiki/Aortic_dissection" title="Aortic dissection">Aortic dissection</a></li>
+<li>3. <a href="https://en.m.wikipedia.org/wiki/Pericarditis" title="Pericarditis">Pericarditis</a> and <a href="/wiki/Cardiac_tamponade" title="Cardiac tamponade">cardiac tamponade</a></li>
+<li>4. <a href="https://en.m.wikipedia.org/wiki/Cardiac_arrhythmia" title="Cardiac arrhythmia">Arrhythmia</a> - <a href="/wiki/Atrial_fibrillation" title="Atrial fibrillation">atrial fibrillation</a> and a number of other arrhythmias can cause chest pain.</li>
+<li>5. Stable <a href="https://en.m.wikipedia.org/wiki/Angina_pectoris" title="Angina pectoris">angina pectoris</a> - this can be treated medically, and, although it warrants investigation, it is not an emergency in its strictest sense</li>
+<li>6. <a href="https://en.m.wikipedia.org/wiki/Myocarditis" title="Myocarditis">Myocarditis</a></li>
+<li>7. <a href="https://en.m.wikipedia.org/wiki/Mitral_valve_prolapse" title="Mitral valve prolapse">Mitral valve prolapse</a> syndrome</li>
+<li>8. <a href="https://en.m.wikipedia.org/wiki/Aortic_aneurysm" title="Aortic aneurysm">Aortic aneurysm</a></li>
+</ul>
+
+ <br> <br>&nbsp;<a href="http://radiologymasterclass.co.uk/tutorials/chest/chest_pathology/chest_pathology_page8" style="color:#fff; background:#a00; box-shadow:#444 0px 0px 2px; padding:5px;"> X-Ray Images </a> <br> <br>
+</div>
+
+<div style="text-align:center; background:#379; border-radius:1em; margin-left:auto; margin-right:auto; color:#ffffff; box-shadow:#666 0px 0px 2px; display:block; width:96%; padding:4px; margin-top:2px;" onclick="showHide('renalhopi')">Renal Symptoms</div>
+<div id="renalhopi" style="width:96%;" class="topicdrop">
+<strong>Common Renal Symptoms</strong> <br>
+<ul style="padding:8px; margin-top:4px;" type="none">
+<li>1. Pain and dysuria</li>
+<li>2. Polyuria and/or nocturia</li>
+<li>3. Oliguria/anuria</li>
+<li>4. Red coloured (haematuria) or dark coloured urine</li>
+<li>5. Increased frequency, burning micturition</li>
+<li>6. Hesitancy, retention of urine, retention with overflow,
+urinary incontinence</li>
+<li>7 .Puffiness of face and oedema</li>
+<li>8. Symptoms of uraemia e.g. nausea, vomiting, pallor</li>
+</ul> <br>
+Note: Morning puffiness of face, periorbital oedema and
+pitting pedal oedema are characteristic features of renal
+diseases (nephritic and nephrotic syndrome) and renal
+failure due to any cause.
+ <br> <br>
+CAUSES OF PAIN <br>
+<strong>Loin pain/flank pain</strong> <br>
+Renal disorders e.g. renal colic (e.g. stone, clot, tumour).
+Constant pain with fever occurs in acute pyelonephritis or perinephric abscess. Dull,
+dragging flank pain occurs due to large kidneys or polycystic kidney disease. <br>
+Pain of perinephric abscess may radiate upwards to chest or may track over
+psoas muscle. <br>
+Pelvi-ureteric/ureteric obstruction <br> <br>
+<strong>Suprapubic pain</strong> <br>
+It occurs due to infection (acute glomerulonephritis), calculi or prostratic hypertrophy. <br> <br>
+
+<strong><u><span style="color:#600;">Medical Terms<span></u>:</strong>
+<ul style="padding:8px; margin-top:2px;" type="none">
+<li><strong>Polyuria:</strong> Abnormally large volume of urine, can be due  to  excessive  fluid  intake,
+diuretics, hyperglycaemia, Addison's disease.</li>
+<li><strong>Oliguria:</strong> Reduction in urine volume to <800 ml/day. It can be due to very low fluid intake or due to loss of kidney function.  </li>
+<li><strong>Anuria:</strong> Anuria is often caused by failure in the function of kidneys or due to severe obstruction like kidney stones or tumours. It may occur with end stage renal disease. </li>
+<li><strong>Incontinence:</strong> Involuntary release of urine. Urge incontinence is due to overactive detrusor. Stress incontinence occurs in women due to weakness  of  the  pelvic  floor,  usually  following  childbirth. </li>
+<li><strong>Hematuria:</strong> Painful haematuria is seen in an infection in any part of the urinary tract, most commonly the bladder (cystitis) or the kidney (pyelonephritis). Painless haematuria is seen in cancer. </li>
+<li><strong>Hemoglobinuria:</strong> It's seen in haemolytic anemias, acute glomerulonephritis, microangiopathies(HUS/TTP), malaria, <a href="https://en.wikipedia.org/wiki/Paroxysmal_nocturnal_hemoglobinuria">Paroxysmal Nocturnal Hemoglobinuria</a> (PNH, due to bone marrow disease). </li>
+<li><strong>Proteinuria:</strong> Most commonly due to damaged nephrons due to hypertension, diabetes, nephrotic syndrome etc. </li>
+</ul>
+ <br>
+<strong><u>Abnormal urine color</u></strong>
+ <br><span style="color:#bb8822"><strong>Orange-brown</strong></span> <br>
+<ul style="padding:8px; margin-top:2px;" type="none">
+<li>  Conjugated bilirubin
+<li>  Rhubarb, senna
+<li>  Concentrated normal urine, e.g. very low fluid intake
+<li>  Drugs: sulfasalazine
+</ul>
+ <br><span style="color:#aa2200"><strong>Red-brown</strong></span> <br>
+<ul style="padding:8px; margin-top:2px;" type="none">
+<li>  Blood, myoglobin, free haemoglobin, porphyrins
+<li>  Beetroot, blackberries
+<li>  Drugs: rifampicin, rifabutin, clofazimine, entacapone
+</ul>
+ <br><span style="color:#662200"><strong>Brown-black</strong></span> <br>
+<ul style="padding:8px; margin-top:2px;" type="none">
+<li>  Conjugated bilirubin
+<li>  Drugs: L-dopa, metronidazole, nitrofurantoin, chloroquine, primaquine
+<li>  Homogentisic acid(in alkaptonuria or ochronosis)
+</ul> <br>
+<span style="color:#228888"><strong>Blue-green</strong></span>
+ <br> Pseudomonas infection;  drugs/dyes, e.g. propofol, fluorescein, triamterene
+
+ <br> <br>&nbsp;<a href="http://radiologymasterclass.co.uk/tutorials/abdo/abdomen_x-ray_calcium/calcium_renal" style="color:#fff; background:#a00; box-shadow:#444 0px 0px 2px; padding:5px;"> X-Ray Images </a> <br> <br>
+
+</div>
+
+
+<div style="text-align:center; background:#268; border-radius:1em; margin-left:auto; margin-right:auto; color:#ffffff; box-shadow:#666 0px 0px 2px; display:block; width:96%; padding:4px; margin-top:2px;" onclick="showHide('githopi')">GIT Symptoms</div>
+<div id="githopi" style="width:96%;" class="topicdrop">
+<strong>Key gastrointestinal symptoms:</strong></span></p>
+<ul>
+<li>Dysphagia / Odynophagia &nbsp;–&nbsp;<em>solids vs liquids&nbsp;</em></li>
+<li>Nausea / vomiting –<em> triggers/ colour of vomit /&nbsp;haematemesis</em></li>
+<li>Reduced appetite / weight loss</li>
+<li>Gastroesophageal reflux</li>
+<li>Abdominal pain –&nbsp;<em>SOCRATES</em></li>
+<li>Abdominal distension</li>
+<li>Altered bowel habit –&nbsp;<em>constipation /&nbsp;diarrhoea&nbsp;/ fresh blood / malaena&nbsp;</em></li>
+<li>Systemic symptoms – <em>jaundice / fever / malaise / fatigue</em></li>
+</ul>
+ <br>
+<h4>Upper gastrointestinal tract symptoms</h4>
+<p><strong><span style="font-style: normal;">Mouth&nbsp;</span><em>–</em><em><span style="font-weight: normal;"> Pain / Ulcers / Growths</span></em></strong></p>
+<p><strong>Dysphagia – </strong><em><span style="font-weight: normal;">Onset / Progression / Solids&nbsp;and/or&nbsp;liquids</span></em></p>
+<p><strong>Odynophagia –&nbsp;</strong><em>pain on swallowing – oesophageal candidiasis</em></p>
+<p><em><span style="color: #ff0000;">Progressive dysphagia (difficulty swallowing solids at first, then eventually difficulty with liquids) suggests the presence of a malignant stricture. Especially in </span><span style="color: #ff0000;">elderly patients with associated weight loss and iron deficiency anaemia.</span></em></p>
+ <br>
+<h4><strong>Nausea </strong><strong>&amp; v</strong><strong>omiting</strong></h4>
+<p><strong>Frequency &amp; volume –&nbsp;</strong><em>high frequency and volume increases risk of dehydration</em></p>
+<p><strong><span style="font-style: normal;">Projectile vomiting – </span></strong><em>obstruction</em></p>
+<p><strong>What does the vomit look like?&nbsp;</strong></p>
+<ul>
+<li>Undigested food – <em>pharyngeal pouch / achalasia / oesophageal stricture</em></li>
+<li>Non-bilious vomit – <em>pyloric obstruction (i.e. pyloric stenosis)</em></li>
+<li>Bilious vomit/ faecal matter –<em> lower GI obstruction (i.e. severe constipation)</em></li>
+</ul>
+ <br>
+<h4>Haematemesis</h4>
+<p><span style="font-style: normal;"><strong>Colour:</strong></span></p>
+<ul>
+<li>Fresh red blood – <em>undigested – acute bleed – mallory weiss tear / oesophageal variceal rupture</em></li>
+<li>Coffee ground – <em>digested – bleeding peptic/ duodenal ulcer</em></li>
+</ul>
+<p><span style="font-style: normal;"><strong>Preceded by forceful retching?</strong> – </span><em>Mallory weiss tear</em></p>
+<address>&nbsp;</address>
+<h4><span style="font-style: normal;"><span style="font-style: normal;"><span style="font-style: normal;"><strong>Anorexia / w</strong></span></span></span><span style="font-style: normal;"><span style="font-style: normal;"><span style="font-style: normal;"><strong>eight l</strong></span></span></span><span style="font-style: normal;"><span style="font-style: normal;"><span style="font-style: normal;"><strong>oss</strong></span></span></span></h4>
+<p><strong><span style="font-style: normal;">How much weight over how long? –&nbsp;</span></strong><span style="font-style: normal;"><em>always suspect malignancy – especially in the elderly</em></span></p>
+<p><span style="font-style: normal;"><strong>Decreased appetite –&nbsp;</strong><em> may suggest malignancy, or in younger patients possibly anorexia nervosa</em></span></p>
+<address>&nbsp;</address>
+<h4><span style="font-style: normal;"><span style="font-style: normal;"><strong>Abdominal p</strong></span></span><span style="font-style: normal;"><span style="font-style: normal;"><strong>ain</strong></span></span></h4>
+<p><strong><span style="font-style: normal;">Is&nbsp;pain&nbsp;localised&nbsp;to a specific&nbsp;area&nbsp;of&nbsp;abdomen?&nbsp;</span></strong></p>
+<ul>
+<li><strong>Right iliac fossa</strong>&nbsp;–<em>&nbsp;appendicitis / Crohn’s disease</em></li>
+<li><strong>Left iliac fossa</strong>&nbsp;– <em>diverticulitis&nbsp;</em></li>
+<li><strong>Epigastric</strong> – <em>gastritis / oesophagitis</em></li>
+<li><strong>Right upper quadrant –&nbsp;</strong><em>cholecystitis / hepatitis&nbsp;</em></li>
+<li><b>Flank –&nbsp;</b><em>pyelonephritis&nbsp;</em></li>
+<li><strong>Suprapubic –&nbsp;</strong><em>cystitis&nbsp;</em></li>
+</ul>
+ <br>
+<p><strong>Is the pain intermittent or&nbsp;continuous?</strong></p>
+<ul>
+<li><strong>Intermittent –</strong><em> e.g.&nbsp;renal colic / biliary colic / bowel obstruction</em></li>
+<li><strong>Continuous –</strong> <em>e.g.</em>&nbsp;<em>cystitis / peritonitis</em></li>
+</ul>
+ <br>
+<p><strong><span style="color: #ff0000;"><em>Use SOCRATES to&nbsp;gain more details about the pain.</em></span></strong></p>
+<address>&nbsp;</address>
+<h4><strong>Bloating&nbsp;</strong><em>&nbsp;</em></h4>
+<p><strong><span style="color: #003366;">Common causes of abdominal distension:</span></strong></p>
+<ul>
+<li><strong>Fat – </strong><em>obesity&nbsp;</em></li>
+<li><strong>Flatus –</strong><em> paralytic ileus / obstruction</em></li>
+<li><strong>Faeces – </strong><em>constipation</em></li>
+<li><strong>Fluid – </strong><em>ascites&nbsp;</em></li>
+<li><strong>Fetus – </strong><em>pregnancy</em></li>
+</ul>
+ <br>
+<h4>Altered bowel habit</h4>
+ <br>
+<p><span style="text-decoration: underline; color: #003366;"><strong>Diarrhoea</strong></span><br>
+<strong>Consistency</strong> – <em>how formed is it? (Bristol stool chart)</em><br>
+<strong>Mucous</strong> –<em> Inflammatory bowel disease (IBD) / Irritable bowel syndrome (IBS)</em><br>
+<strong>Blood</strong> – <em>Fresh red blood (anal fissure / haemorrhoids / IBD). Melaena (upper gastrointestinal bleed)</em><br>
+<strong>Urgency</strong>–<em> IBD / IBS / gastroenteritis</em><br>
+<strong>Recent antibiotics?</strong> –<em> C.&nbsp;Difficile&nbsp;</em><br>
+<strong>Recent suspect food? –</strong>&nbsp;<em>food poisoning</em><br>
+<strong>Laxative use?</strong></p>
+ <br>
+<p><span style="text-decoration: underline; color: #003366;"><span style="font-style: normal;"><strong><span style="font-style: normal;">Constipation</span></strong></span></span></p>
+<p><strong><span style="font-style: normal;">Duration of constipation</span></strong></p>
+<p><span style="font-style: normal;"><strong>Absolute constipation?</strong> – <em>not passing flatus – obstruction</em></span></p>
+ <br>
+<p><span style="text-decoration: underline;"><span style="font-style: normal; color: #ff0000;"><strong>Colour of the stool</strong></span></span></p>
+<p><strong>Black </strong><em>(Melaena)&nbsp;– PUD / duodenal ulcer / malignancy</em></p>
+<p><strong>Fresh red blood</strong>&nbsp;<em>–&nbsp;anal fissure / haemorrhoids / IBD / &nbsp;polyp / lower GI malignancy</em></p>
+<p><strong>Pale</strong><em><strong>&nbsp;</strong>(Steatorrhoea) –&nbsp;</em>Biliary obstruction<em> (gallstones / malignancy)</em></p>
+ <br>
+<h4><strong><span style="font-style: normal;">Jaundice</span></strong></h4>
+<p><strong><span style="font-style: normal;">Yellowing of the skin and sclera&nbsp;</span></strong></p>
+<p><strong>Dark urine</strong></p>
+ <br>
+<p><strong><span style="color: #ff0000;">Causes of jaundice:</span></strong></p>
+<ul>
+<li><span style="color: #000000;"><strong>Infectious</strong> – <em>hepatitis B &amp; C / malaria</em></span></li>
+<li><strong>Malignancy</strong> – <em>pancreatic cancer /&nbsp;cholangiocarcinoma</em></li>
+<li><strong>Alcoholic liver disease</strong></li>
+<li><strong>Autoimmune</strong> – <em>autoimmune hepatitis / primary sclerosing cholangitis</em></li>
+<li><strong>Congenital</strong> – <em>Gilbert’s syndrome (benign)</em>
+</ul> <br>
+<a href="http://geekymedics.com/gi-history/" style="font-size:small; color:#aaa;">Source: Geeky Medics</a>
+ <br> <br>&nbsp;<a href="http://radiologymasterclass.co.uk/tutorials/abdo/abdomen_x-ray_abnormalities/pathology_bowel_gas_perforation" style="color:#fff; background:#a00; box-shadow:#444 0px 0px 2px; padding:5px;"> X-Ray Images </a> <br> <br>
+
+</div>
+
+<div style="text-align:center; background:#379; border-radius:1em; margin-left:auto; margin-right:auto; color:#ffffff; box-shadow:#666 0px 0px 2px; display:block; width:96%; padding:4px; margin-top:2px;" onclick="showHide('cnshopi')">For CNS Cases</div>
+<div id="cnshopi" style="width:96%;" class="topicdrop"> <br>
+History of falling and convulsion must be taken. <br> <br>
+<strong><span style="color:#08a;">Falling</span></strong> <br>
+<strong><u>Time of falling:</u></strong>What time of day?What were they doing at the time? e.g. Morning: working in the garden, rushing to toilet or looking upwards&nbsp;<em>(stroke/vertebrobasilar insufficiency)</em>, getting up from bed <em>(Postural hypotension)</em> <br> <br>
+<strong><u>Before:</u></strong> Is there any warning/aura? Is there any dizziness/chest pain or palpitations? (helping to identify the cause) <br> <br>
+<strong><u>During: </u></strong>is there any incontinence or tongue biting <em>(indicating seizure activity)</em>. Was there any loss of consciousness? Is the patient pale/flushed <em>(may indicate vasovagal attack)</em>? Did they injure themselves? What part of the body had first contact with the floor?
+ <br> <br>
+<strong><u>After: </u></strong>What happens after the fall? Is the patient able to get themselves up? How long does it take them? Are they able to resume normal activities afterwards? Was there any confusion after the event? <em>(head injury)</em> Was there any weakness or speech difficulty after the event? <em>(Stroke/TIA)</em> <br> <br>
+Relevant Qs: How many times have you fallen? Which part of your body touched the ground at first? Allows you to gauge the severity of the problem. <br> <br>
+
+
+<p><span style="color: #003366;"><strong>Possible causes include:</strong></span></p>
+<table style="width:100%;">
+<tbody>
+<tr>
+<td><strong>General</strong></td>
+<td>Mechanical <em>(always give a reason e.g. secondary to poor footwear/visual difficulties- see falls assessment)/ </em>Polypharmacy</td>
+</tr>
+<tr>
+<td><strong>Cardiovascular</strong></td>
+<td>Arrhythmias/ Orthostatic hypotension/ Bradycardia/ Valvular heart disease</td>
+</tr>
+<tr>
+<td><strong>Neurological</strong></td>
+<td width="366">Stroke/ Peripheral neuropathy</td>
+</tr>
+<tr>
+<td><strong>Genitourinary</strong></td>
+<td>Incontinence/ Urinary tract infection</td>
+</tr>
+<tr>
+<td><strong>Endocrine</strong></td>
+<td>Hypoglycaemia</td>
+</tr>
+<tr>
+<td><strong>Musculoskeletal</strong></td>
+<td>Arthritis/ Disuse atrophy</td>
+</tr>
+<tr>
+<td><strong>ENT</strong></td>
+<td>Benign Paroxysmal Positional vertigo/ Ear wax</td>
+</tr>
+</tbody>
+</table>
+ <br> <br>&nbsp;<a href="http://radiologymasterclass.co.uk/tutorials/ct/ct_acute_brain/ct_brain_details" style="color:#fff; background:#a00; box-shadow:#444 0px 0px 2px; padding:5px;"> X-Ray Images </a> <br> <br>
+
+</div>
+<br>
+<em style="color:#aaa;">While examining a patient...</em>
+<div onclick="showHide('heartsounds')" class="topic" style="text-align:center; background:#800;">Heart Sounds</div>
+<div id="heartsounds" class="topicdrop" >
+
+<p><em>Use good earphones/headset and turn up the volume! Audio may need time to load depending on network condition.</em></p>
+ 
+ <div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="01_normal_heart_sound.mp3" type="audio/mpeg">
+  The plugin is outdated! <a href="https://play.google.com/store/apps/details?id=com.google.android.webview&hl=en" style="background:#c00; padding:2px; color:#ffffff;">Update Now</a>
+</audio> <br>
+Normal Heart Sound
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="01_split_sto_paradoxical.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Split S2 Paradoxical
+</div>
+ <br>
+<span style="font-weight:bold; color:#06a;">Murmurs:</span> <br>
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="02_mitral_stenosis.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Mitral Stenosis
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="03_mitral_regurgitation.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Mitral Regurgitation
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="04_mitral_valve_prolapse.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Mitral Valve Prolapse
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="05_aortic_stenosis.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Aortic Stenosis
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="06_aortic_insufficiency.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Aortic Insufficiency
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="08_pulmonic_valve_stenosis.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Pulmonic Valve Stenosis
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="09_pulmonic_insufficiency.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Pulmonic Insufficiency
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="10_tricuspid_insufficiency.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Tricuspid Insufficiency
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="11_atrial_septal_defect.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Atrial Septal Defect
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="12_ventricular_septal_defect.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Ventricular Septal Defect
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="13_patent_ductus_arteriosus.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Patent Ductus Arteriosus
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="14_austin_flint_murmur.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Austin Flint Murmur
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="15_pericardial_friction_rub.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Pericardial Rub
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="16_pericardial_knock.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Pericardial Knock
+</div>
+ <br><span style="font-weight:bold; color:#06a;">Extra beats:</span> <br>
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="16_sthree_ventricular_gallop.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+S3 Ventricular Gallop
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="17_sfour_atrial_gallop.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+S4 Atrial Gallop
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="19_quadruple_gallop.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Quadruple Gallop
+</div>
+ <br>
+<span style="font-size:small; color:#666;">If the audio doesn't pause, tap the back button of your phone.</span> 
+</div>
+
+<div onclick="showHide('respsounds')" class="topic" style="text-align:center; background:#258;">Respiratory Sounds</div>
+<div id="respsounds" class="topicdrop" >
+
+<p><em>Use good earphones/headset and keep volume at mid range! Audio may need some time to load depending on network condition.</em></p>
+ 
+ <div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="20_bronchial_breathsound.mp3" type="audio/mpeg">
+  The plugin is outdated! <a href="https://play.google.com/store/apps/details?id=com.google.android.webview&hl=en" style="background:#c00; padding:2px; color:#ffffff;">Update Now</a>
+</audio> <br>
+Bronchial Breath Sound
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="27_vesicular.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Vesicular
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="21_bronchovesicular.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Bronchovesicular
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="24_expiratory_wheeze.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Expiratory Wheeze
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="22_crackles.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Coarse crackles
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="23_cracklesfine.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Fine Crackles
+</div>
+
+
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="25_pluralrub.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Pleural Rub
+</div>
+
+<div style="background:#ffffff; display:inline-block; box-shadow:#666 0px 0px 2px; width:48%; text-align:center; margin-bottom:1em; font-size:small;">
+ <audio controls loop style="width:100%;" preload="none">
+  <source src="26_rhonchi.mp3" type="audio/mpeg">
+  Plugin outdated!
+</audio> <br>
+Rhonchi
+</div>
+
+<span style="font-size:small; color:#666;">If the audio doesn't pause, tap the back button of your phone.</span> 
+</div>
+ <br>
+
+</div>
+
+
+<div style="text-align:center; display:block; font-size:large; color:#ffffff" class="button" onclick="showHide('labv')">
+NORMAL LAB VALUES
+</div>
+	<div class="drop" id="labv" style="box-shadow:1px 1px 1px #000; background:#eee; width:98%; margin-left:3px; padding-top:0.5em;">
+
+<h3 align="center" style="font-size:large;"><a name="menu">Nutrition</a></h3>
+<div onclick="showHide('dri')" class="topic" style="background:#268;">
+DRI</div>
+<div id="dri" style="text-align:left;" class="topicdrop">
+<table  style="width:100%;">
+		<caption>
+			<strong>Daily Reference Intakes</strong>
+		</caption>
+
+<tr>
+<td>Total <a href="https://en.m.wikipedia.org/wiki/Fat" title="Fat">Fat</a></td>
+<td>65 g</td>
+</tr>
+<tr>
+<td><a href="https://en.m.wikipedia.org/wiki/Saturated_Fatty_Acid" title="Saturated Fatty Acid" class="mw-redirect">Saturated Fatty Acids</a></td>
+<td>20 g</td>
+</tr>
+<tr>
+<td><a href="https://en.m.wikipedia.org/wiki/Cholesterol" title="Cholesterol">Cholesterol</a></td>
+<td>300 mg</td>
+</tr>
+<tr>
+<td><a href="https://en.m.wikipedia.org/wiki/Sodium" title="Sodium">Sodium</a></td>
+<td>2400&#160;mg</td>
+</tr>
+<tr>
+<td><a href="https://en.m.wikipedia.org/wiki/Potassium" title="Potassium">Potassium</a></td>
+<td>4700&#160;mg</td>
+</tr>
+<tr>
+<td>Total <a href="https://en.m.wikipedia.org/wiki/Carbohydrate" title="Carbohydrate">Carbohydrate</a></td>
+<td>300 g</td>
+</tr>
+<tr>
+<td><a href="https://en.m.wikipedia.org/wiki/Dietary_Fiber" title="Dietary Fiber" class="mw-redirect">Dietary Fiber</a></td>
+<td>25 g</td>
+</tr>
+<tr>
+<td><a href="https://en.m.wikipedia.org/wiki/Protein_(nutrient)" title="Protein (nutrient)">Protein</a></td>
+<td>50 g</td>
+</tr>
+</table>
+<span style="font-size:small; color:#aaa;">#Values as per Food and Drug Administration (FDA) <br> <br></span>
+</div>
+
+<div onclick="showHide('rda')" class="topic" style="background:#379;">
+RDA</div>
+<div id="rda" style="text-align:left;" class="topicdrop">	
+<table   style="width:100%;">
+		<caption>
+			<strong>Recommended Dietary Allowances (RDAs)</strong>
+		</caption>
+
+<tr>
+	<td>
+		<strong>Nutrient</strong>
+	</td>
+	<th>
+		Female
+	</th>
+	<th>
+		Male
+	</th>
+</tr>
+
+
+<tr>
+	<td>
+		Protein
+	</td>
+	<td>
+		46 g
+	</td>
+	<td>
+		56 g
+	</td>
+</tr>
+<tr>
+	<td>
+		Folic acid
+	</td>
+	<td>
+		400 &#181;g
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Vitamin A (retinol)
+	</td>
+	<td>
+		700 &#181;g*
+	</td>
+	<td>
+		900 &#181;g*
+	</td>
+</tr>
+<tr>
+	<td>
+		Biotin
+	</td>
+	<td>
+		30 &#181;g (AI)
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Thiamine (Vitamin B<sub>1</sub>)
+	</td>
+	<td>
+		1.1 mg
+	</td>
+	<td>
+		1.2 mg
+	</td>
+</tr>
+<tr>
+	<td>
+		Calcium
+	</td>
+	<td>
+		1000 mg (AI)
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Riboflavin (Vitamin B<sub>2</sub>)
+	</td>
+	<td>
+		1.1 mg
+	</td>
+	<td>
+		1.3 mg
+	</td>
+</tr>
+<tr>
+	<td>
+		Phosphorus
+	</td>
+	<td>
+		700 mg
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Niacin (Vitamin B<sub>3</sub>)
+	</td>
+	<td>
+		14 mg
+	</td>
+	<td>
+		16 mg
+	</td>
+</tr>
+<tr>
+	<td>
+		Selenium
+	</td>
+	<td>
+		55 &#181;g
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+
+<tr>
+	<td>
+		Pantothenic acid (Vitamin B<sub>5</sub>)
+	</td>
+	<td>
+		5 mg (AI)
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Iron
+	</td>
+	<td>
+		18 mg
+	</td>
+	<td>
+		8 mg
+	</td>
+</tr>
+<tr>
+	<td>
+		Pyridoxine (Vitamin B<sub>6</sub>)
+	</td>
+	<td>
+		1.3 mg
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Zinc
+	</td>
+	<td>
+		8 mg
+	</td>
+	<td>
+		11 mg
+	</td>
+</tr>
+<tr>
+	<td>
+		Cobalamine (Vitamin B<sub>12</sub>)
+	</td>
+	<td>
+		2.4 &#181;g
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Magnesium
+	</td>
+	<td>
+		310 mg
+	</td>
+	<td>
+		400 mg
+	</td>
+</tr>
+<tr>
+	<td>
+		Vitamin C
+	</td>
+	<td>
+		75 mg<span style="color: red;">*</span>
+	</td>
+	<td>
+		90 mg<span style="color: red;">*</span>
+	</td>
+</tr>
+<tr>
+	<td>
+		Iodine
+	</td>
+	<td>
+		150 &#181;g
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Vitamin D
+	</td>
+	<td>
+		15 &#181;g <span style="color: red;">**</span>
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Fluoride
+	</td>
+	<td>
+		3 mg (AI)
+	</td>
+	<td>
+		4 mg (AI)
+	</td>
+</tr>
+<tr>
+	<td>
+		Vitamin E
+	</td>
+	<td>
+		15 mg**
+	</td>
+	<td>
+		same
+	</td>
+</tr>
+<tr>
+	<td>
+		Linoleic acid
+	</td>
+	<td>
+		12 g (AI)
+	</td>
+	<td>
+		17 g (AI)
+	</td>
+</tr>
+<tr>
+	<td>
+		Vitamin K
+	</td>
+	<td>
+		90 &#181;g (AI)
+	</td>
+	<td>
+		120 &#181;g
+	</td>
+</tr>
+<tr>
+	<td>
+		&alpha;-Linolenic acid
+	</td>
+	<td>
+		1.1 g (AI)
+	</td>
+	<td>
+		1.6 g (AI)
+	</td>
+</tr>
+
+</table>
+<span style="font-size:small; color:#aaa;">#Values as per Food and Nutrition Board of the US National Academy of Sciences <br> <br></span>
+
+<span style="font-size:small; color:#444;">
+ *This value has been questioned following the publication of data indicating that a high intake of vitamin A in older people leads to an increased risk of hip fractures. Vitamin A stimulates osteoclasts, the cells that degrade bone, and inhibits osteoblasts, the cells that build bone. To the extent that the vitamin A requirement is met by ingested beta-carotene, these amounts should be multiplied by 12. And that is probably the best way to get your vitamin A as the body only converts enough beta-carotene into vitamin A to meet its needs. There is also evidence that beta-carotene has important functions besides being the precursor of vitamin A and therefore should be ingested in amounts even greater than needed to meet the vitamin A requirement. In short, one should consume vitamin tablets containing beta-carotene and not vitamin A.<br>
+<span style="color: red;">*</span>Smokers should add 35 mg to these values, and some nutritionists believe that 200 mg of vitamin C per day is probably optimal for everyone. This is more than twice the current RDA, but far lower than the 2,000 mg/day that is the upper limit (<b>UL</b>) and that some people exceed in the hope of warding off colds, cancer, etc.<br>
+<span style="color: red;">**</span>15 &#181;g = 600 IU ("International Units").<br>
+ **The upper limit (UL) is 1,000 mg/day.<br>
+</span>
+
+<br>
+</div>
+
+<h3 align="center"><a name="lab">Common Lab Values</a></h3>
+
+<div onclick="showHide('hidethis1')" class="topic" style="background:#268;">
+Hematology</div>
+<div id="hidethis1" style="text-align:left;" class="topicdrop">
+
+
+<ul type="none" style="margin-left:0px; padding:4px;">
+  <li>
+    <h4 align="left"><a name="HEMATOCRIT(HCT)">HEMATOCRIT (HCT)</a></h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Adult Female Range: 37 - 47%<br>
+        Optimal Adult Female Reading: 42%<br>
+        Normal Adult Male Range 40 - 54%<br>
+        Optimal Adult Male Reading: 47<br>
+        Normal Newborn Range: 50 - 62%<br>
+        Optimal Newborn Reading: 56</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4 align="left"><a name="HEMOGLOBIN(HGB)">HEMOGLOBIN (HGB)</a></h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Adult Female Range: 12 - 16 g/dl<br>
+        Optimal Adult Female Reading: 14 g/dl<br>
+        Normal Adult Male Range: 14 - 18 g/dl<br>
+        Optimal Adult Male Reading: 16 g/dl<br>
+        Normal Newborn Range: 14 - 20 g/dl<br>
+        Optimal Newborn Reading: 17 g/dl</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4><a name="MCH(MeanCorpuscularHemoglobin)">MCH (Mean Corpuscular
+    Hemoglobin)</a></h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Adult Range: 27 - 33 pg<br>
+        Optimal Adult Reading: 30</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4 align="left"><a name="MCV(MeanCorpuscularVolume)">MCV (Mean Corpuscular
+    Volume)</a></h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Adult Range: 80 - 100 fl<br>
+        Optimal Adult Reading: 90<br>
+        Higher ranges are found in newborns and infants</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4><a name="MCHC(Mean CorpuscularHemoglobinConcentration)">MCHC (Mean
+    Corpuscular Hemoglobin Concentration)</a></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 32 - 36 %<br>
+        Optimal Adult Reading: 34<br>
+        Higher ranges are found in newborns and infants</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="R.B.C.(RedBloodCellCount)">R.B.C. (Red Blood Cell Count)</a></h4>
+    <ul type="none">
+      <li>Normal Adult Female Range: 3.9 - 5.2 mill/mm<sup>3</sup><br>
+        Optimal Adult Female Reading: 4.55<br>
+        Normal Adult Male Range: 4.2 - 5.6 mill/mm<sup>3</sup><br>
+        Optimal Adult Male Reading: 4.9<br>
+        Lower ranges are found in Children, newborns and infants</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="W.B.C.(WhiteBloodCellCount)">W.B.C. (White Blood Cell Count)</a></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 3.8 - 10.8 thous/mm<sup>3</sup><br>
+        Optimal Adult Reading: 7.3<br>
+        Higher ranges are found in children, newborns and infants.</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="PlateletCount">PLATELET COUNT</a></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 130 - 400 thous/mm<sup>3</sup><br>
+        Optimal Adult Reading: 265<br>
+        Higher ranges are found in children, newborns and infants</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="NEUTROPHILS">NEUTROPHILS</a> and NEUTROPHIL COUNT&nbsp; - <cite>this
+    is the main defender of the body against infection and antigens. High levels
+    may indicate an active infection.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 48 - 73 %<br>
+        Optimal Adult Reading: 60.5<br>
+        Normal Children’s Range: 30 - 60 %<br>
+        Optimal Children’s Reading: 45</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="LYMPHOCYTES">LYMPHOCYTES</a> and LYMPHOCYTE COUNT - <cite>Elevated
+    levels may indicate an active viral infections such as measles, rubella,
+    chickenpox, or infectious mononucleosis.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 18 - 48 %<br>
+        Optimal Adult Reading: 33<br>
+        Normal Children’s Range: 25 - 50 %<br>
+        Optimal Children’s Reading: 37.5</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="MONOCYTES">MONOCYTES</a> and MONOCYTE COUNT - <cite>Elevated
+    levels are seen in tissue breakdown or chronic infections, carcinomas,
+    leukemia (monocytic) or lymphomas.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 0 - 9 %<br>
+        Optimal Adult Reading: 4.5</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="EOSINOPHILS ">EOSINOPHILS </a>and EOSINOPHIL COUNT&nbsp; - <cite>Elevated
+    levels may indicate an allergic reactions or parasites.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 0 - 5 %<br>
+        Optimal Adult Reading: 2.5</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="BASOPHILS">BASOPHILS</a> and BASOPHIL COUNT - <cite>Basophilic
+    activity is not fully understood but it is known to carry histamine, heparin
+    and serotonin. High levels are found in allergic reactions.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 0 - 2 %<br>
+        Optimal Adult Reading: 1</li>
+    </ul>
+  </li>
+</ul>
+
+</div>
+
+
+
+<div onclick="showHide('hidethis2')" class="topic" style="background:#379;">Electrolytes</div>
+<div id="hidethis2" class="topicdrop"  style="text-align:left;">
+<ul type="none" style="padding:6px;">
+  <li>
+    <h4><a name="SODIUM">SODIUM</a> -&nbsp; <cite>Sodium is the most abundant
+    cation in the blood and its chief base. It functions in the body to maintain
+    osmotic pressure, acid-base balance and to transmit nerve impulses. Very Low
+    value: seizure and Neurologic Sx.</cite></h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Adult Range: 135-146 mEq/L<br>
+        Optimal Adult Reading: 140.5</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4><a name="POTASSIUM">POTASSIUM</a> - <cite>Potassium is the major <strong>i<b>ntra</b></strong>cellular
+    cation. Very low value: Cardiac arythemia.</cite></h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Range: 3.5 - 5.5 mEq/L<br>
+        Optimal Adult Reading: 4.5</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4 align="left"><a name="CHLORIDE ">CHLORIDE</a> - <cite>Elevated levels
+    are related to acidosis as well as too much water crossing the cell
+    membrane. Decreased levels with decreased serum albumin may indicate water
+    deficiency crossing the cell membrane (edema).</cite></h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Adult Range: 95-112 mEq/L<br>
+        Optimal Adult Reading: 103</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4 align="left"><a name="CO2">CO2</a> (Carbon Dioxide) - <cite>The CO2
+    level is related to the respiratory exchange of carbon dioxide in the lungs
+    and is part of the bodies buffering system. Generally when used with the
+    other electrolytes, it is a good indicator of acidosis and alkalinity.</cite></h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Adult Range: 22-32 mEq/L<br>
+        Optimal Adult Reading: 27<br>
+        Normal Childrens Range - 20 - 28 mEq/L<br>
+        Optimal Childrens Reading: 24</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4 align="left"><a name="CALCIUM ">CALCIUM</a> - <cite>involved in bone
+    metabolism, protein absorption, fat transfer muscular contraction,
+    transmission of nerve impulses, blood clotting and cardiac function.
+    Regulated by parathyroid.</cite></h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Adult Range: 8.5-10.3 mEq/dl<br>
+        Optimal Adult Reading: 9.4</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4 align="left"><a name="PHOSPHORUS ">PHOSPHORUS</a> - Generally inverse
+    with Calcium.</h4>
+    <ul type="none">
+      <li>
+        <p align="left">Normal Adult Range: 2.5 - 4.5 mEq/dl<br>
+        Optimal Adult Reading: 3.5<br>
+        Normal Childrens Range: 3 - 6 mEq/dl<br>
+        Optimal Childrens Range: 4.5</li>
+    </ul>
+    <p align="left">&nbsp;</li>
+  <li>
+    <h4><a name="ANIONGAP">ANION GAP</a> (Sodium + Potassium - CO2 + Chloride) -
+    <cite>An increased measurement is associated with metabolic acidosis due to
+    the overproduction of acids (a state of alkalinity is in effect). Decreased
+    levels may indicate metabolic alkalosis due to the overproduction of
+    alkaloids (a state of acidosis is in effect).</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 4 - 14 (calculated)<br>
+        Optimal Adult Reading: 9</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="CALCIUM/PHOSPHORUS ">CALCIUM/PHOSPHORUS</a> Ratio</h4>
+    <ul type="none">
+      <li>Normal Adult Range: 2.3 - 3.3 (calculated)<br>
+        Optimal Adult Reading: 2.8<br>
+        Normal Children’s range: 1.3 - 3.3 (calculated)<br>
+        Optimal Children’s Reading: 2.3</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="SODIUM/POTASSIUM">SODIUM/POTASSIUM</a></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 26 - 38 (calculated)<br>
+        Optimal Adult Reading: 32</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+
+<div onclick="showHide('hidethis3')" class="topic" style="background:#268;">Hepatic</div>
+<div id="hidethis3" class="topicdrop"  style="text-align:left;">
+<ul type="none" style="padding:6px;">
+  <li>
+    <h4>AST (Serum Glutamic-Oxalocetic Transaminase - <a name="SGOT">SGOT</a> )
+    - <cite>found primarily in the liver, heart, kidney, pancreas, and muscles.
+    Seen in tissue damage, especially heart and live</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 0 - 42 U/L<br>
+        Optimal Adult Reading: 21</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4>ALT (Serum Glutamic-Pyruvic Transaminase - <a name="SGPT">SGPT</a>) - <cite>Decreased
+    SGPT in combination with increased cholesterol levels is seen in cases of a
+    congested liver. We also see increased levels in mononucleosis, alcoholism,
+    liver damage, kidney infection, chemical pollutants or myocardial infarction</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 0 - 48 U/L<br>
+        Optimal Adult Reading: 24</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="ALKALINEPHOSPHATASE">ALKALINE PHOSPHATASE</a> - U<cite>sed
+    extensively as a tumor marker it is also present in bone injury, pregnancy,
+    or skeletal growth (elevated readings.&nbsp; Low levels are sometimes found
+    in hypoadrenia, protein deficiency, malnutrition and a number of vitamin
+    deficiencies</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 20 - 125 U/L<br>
+        Optimal Adult Reading: 72.5<br>
+        Normal Childrens Range: 40 - 400 U/L<br>
+        Optimal Childrens Reading: 220</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="GGT">GGT</a> (Gamma-Glutamyl Transpeptidase) - <cite>Elevated
+    levels may be found in liver disease, alcoholism, bile-duct obstruction,
+    cholangitis, drug abuse, and in some cases excessive magnesium ingestion.
+    Decreased levels can be found in hypothyroidism, hypothalamic malfunction
+    and low levels of magnesium.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Female Range: 0 - 45 U/L<br>
+        Optimal Female Reading: 22.5<br>
+        Normal Adult Male Range: 0 - 65 U/L<br>
+        Optimal Male Reading: 32.5</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="LDH">LDH</a> (Lactic Acid Dehydrogenase) - <cite>Increases are
+    usually found in cellular death and/or leakage from the cell or in some
+    cases it can be useful in confirming myocardial or pulmonary infarction
+    (only in relation to other tests). Decreased levels of the enzyme may be
+    seen in cases of malnutrition, hypoglycemia, adrenal exhaustion or low
+    tissue or organ activity.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 0 - 250 U/L<br>
+        Optimal Adult Reading: 125</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="BILIRUBIN">BILIRUBIN</a>, TOTAL - <cite>Elevated in liver
+    disease, mononucleosis, hemolytic anemia, low levels of exposure to the sun,
+    and toxic effects to some drugs, decreased levels are seen in people with an
+    inefficient liver, excessive fat digestion, and possibly a diet low in
+    nitrogen bearing foods</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range 0 - 1.3 mg/dl<br>
+        Optimal Adult Reading: .65</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div onclick="showHide('hidethis4')" class="topic" style="background:#379;">Renal</div>
+<div id="hidethis4" class="topicdrop"  style="text-align:left;">
+<ul type="none" style="padding:6px;">
+  <li>
+    <h4><a name="B.U.N.">B.U.N.</a> (Blood Urea Nitrogen) - <cite>Increases can
+    be caused by excessive protein intake, kidney damage, certain drugs, low
+    fluid intake, intestinal bleeding, exercise or heart failure. Decreased
+    levels may be due to a poor diet, malabsorption, liver damage or low
+    nitrogen intake.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 7 - 25 mg/dl<br>
+        Optimal Adult Reading: 16</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="CREATININE">CREATININE</a> - <cite>Low levels are sometimes
+    seen in kidney damage, protein starvation, liver disease or pregnancy.
+    Elevated levels are sometimes seen in kidney disease due to the kidneys job
+    of excreting creatinine, muscle degeneration, and some drugs involved in
+    impairment of kidney function.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: .7 - 1.4 mg/dl<br>
+        Optimal Adult Reading: 1.05</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="URICACID ">URIC ACID</a> - <cite>High levels are noted in gout,
+    infections, kidney disease, alcoholism, high protein diets, and with toxemia
+    in pregnancy. Low levels may be indicative of kidney disease, malabsorption,
+    poor diet, liver damage or an overly acid kidney.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Female Range: 2.5 - 7.5 mg/dl<br>
+        Optimal Adult Female Reading: 5.0<br>
+        Normal Adult Male Range: 3.5 - 7.5 mg/dl<br>
+        Optimal Adult Male Reading:5.5</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="BUN/CREATININE">BUN/CREATININE</a> - T<cite>his calculation is
+    a good measurement of kidney and liver function.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 6 -25 (calculated)<br>
+        Optimal Adult Reading: 15.5</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div onclick="showHide('hidethis5')" class="topic" style="background:#268;">Protein</div>
+<div id="hidethis5" class="topicdrop"  style="text-align:left;">
+<ul type="none" style="padding:6px;">
+  <li>
+    <h4><a name="PROTEINTotal">PROTEIN, TOTAL</a> - <cite>Decreased levels may
+    be due to poor nutrition, liver disease, malabsorption, diarrhea, or severe
+    burns. Increased levels are seen in lupus, liver disease, chronic
+    infections, alcoholism, leukemia, tuberculosis amongst many others.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 6.0 -8.5 g/dl<br>
+        Optimal Adult Reading: 7.25</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="ALBUMIN">ALBUMIN</a> - <cite>major constituent of serum protein
+    (usually over 50%). High levels are seen in liver disease(rarely) , shock,
+    dehydration, or multiple myeloma. Lower levels are seen in poor diets,
+    diarrhea, fever, infection, liver disease, inadequate iron intake,
+    third-degree burns and edemas or hypocalcemia</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 3.2 - 5.0 g/dl<br>
+        Optimal Adult Reading: 4.1</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="GLOBULIN">GLOBULIN</a> - <cite>Globulins have many diverse
+    functions such as, the carrier of some hormones, lipids, metals, and
+    antibodies(IgA, IgG, IgM, and IgE). Elevated levels are seen with&nbsp;
+    chronic infections, liver disease, rheumatoid arthritis, myelomas, and lupus
+    are present, . Lower levels in immune compromised patients, poor dietary
+    habits, malabsorption and liver or kidney disease.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 2.2 - 4.2 g/dl (calculated)<br>
+        Optimal Adult Reading: 3.2</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="A/GRATIO">A/G RATIO</a> (Albumin/Globulin Ratio)</h4>
+    <ul type="none">
+      <li>Normal Adult Range: 0.8 - 2.0 (calculated)<br>
+        Optimal Adult Reading: 1.9</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+
+
+<div onclick="showHide('hidethis6')" class="topic" style="background:#379;">Lipids</div>
+<div id="hidethis6" class="topicdrop"  style="text-align:left;">
+<ul type="none" style="padding:6px;">
+  <li>
+    <h4><a name="CHOLESTEROL ">CHOLESTEROL</a> - <cite>High density lipoproteins
+    (HDL) is desired as opposed to the low density lipoproteins (LDL), two types
+    of cholesterol. Elevated cholesterol has been seen in artherosclerosis,
+    diabetes, hypothyroidism and pregnancy. Low levels are seen in depression,
+    malnutrition, liver insufficiency, malignancies, anemia and infection.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 120 - 240 mg/dl<br>
+        Optimal Adult Reading: 180</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="LDL">LDL</a> (Low Density Lipoprotein) - <cite>studies
+    correlate the association between high levels of LDL and arterial
+    artherosclerosis</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 62 - 130 mg/dl<br>
+        Optimal Adult Reading: 81 mg/dl</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="HDL">HDL</a> (High Density Lipoprotein) - <cite>A high level of
+    HDL is an indication of a healthy metabolic system if there is no sign of
+    liver disease or intoxication.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 35 - 135 mg/dl<br>
+        Optimal Adult Reading: +85 mg/dl</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="TRIGLYCERIDES">TRIGLYCERIDES</a> - <cite>Increased levels may
+    be present in artherosclerosis, hypothyroidism, liver disease, pancreatitis,
+    myocardial infarction, metabolic disorders, toxemia, and nephrotic syndrome.
+    Decreased levels may be present in chronic obstructive pulmonary disease,
+    brain infarction, hyperthyroidism, malnutrition, and malabsorption.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 0 - 200 mg/dl<br>
+        Optimal Adult Reading: 100</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="CHOLESTEROL/LDLRATIO">CHOLESTEROL/LDL RATIO</a></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 1 - 6<br>
+        Optimal Adult Reading: 3.5</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+<div onclick="showHide('hidethis7')" class="topic" style="background:#268;">Thyroid</div>
+<div id="hidethis7" class="topicdrop"  style="text-align:left;">
+<ul type="none" style="padding:6px;">
+  <li>
+    <h4><a name="THYROXINE(T4)">THYROXINE (T4)</a> - <cite>Increased levels are
+    found in hyperthyroidism, acute thyroiditis, and hepatitis. Low levels can
+    be found in Cretinism, hypothyroidism, cirrhosis, malnutrition, and chronic
+    thyroiditis.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 4 - 12 ug/dl<br>
+        Optimal Adult Reading: 8 ug/dl</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="T3-UPTAKE">T3-UPTAKE</a> - I<cite>ncreased levels are found in
+    hyperthyroidism, severe liver disease, metastatic malignancy, and pulmonary
+    insufficiency. Decreased levels are found in hypothyroidism, normal
+    pregnancy, and hyperestrogenis status.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 27 - 47%<br>
+        Optimal Adult Reading: 37 %</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="FREET4INDEX(T7)">FREE T4 INDEX (T7)</a></h4>
+    <ul type="none">
+      <li>Normal Adult Range: 4 - 12<br>
+        Optimal Adult Reading: 8</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4><a name="THYROID-STIMULATINGHORMONE(TSH)">THYROID-STIMULATING HORMONE (TSH</a>)
+    - <cite>produced by the anterior pituitary gland, causes the release and
+    distribution of stored thyroid hormones. When T4 and T3 are too high, TSH
+    secretion decreases, when T4 and T3 are low, TSH secretion increases.</cite></h4>
+    <ul type="none">
+      <li>Normal Adult Range: .5 - 6 miliIU/L<br>
+        &nbsp;</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+
+<div onclick="showHide('hidethis8')" class="topic" style="background:#379;">Cardiac</div>
+<div id="hidethis8" class="topicdrop"  style="text-align:left;">
+<ul type="none" style="padding:6px;">
+  <li>
+    <h4>&nbsp;Creatine phosphokinase (CK) - <cite>Levels rise 4 to 8 hours after
+    an acute MI, peaking at 16 to 30 hours and returning to baseline within 4
+    days</cite></h4>
+    <ul type="none">
+      <li>25-200 U/L</li>
+      <li>32-150 U/L</li>
+    </ul>
+    <p>&nbsp;</li>
+
+  <li>
+    <h4>CK-MB CK isoenzyme&nbsp; - <cite>It begins to increase 6 to 10 hours
+    after an acute MI, peaks in 24 hours, and remains elevated for up to 72
+    hours.</cite></h4>
+    <ul type="none">
+      <li>&lt; 12 IU/L if total CK is &lt;400 IU/L</li>
+      <li>&lt;3.5% of total CK if total CK is &gt;400 IU/L</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4>(LDH) Lactate dehydrogenase&nbsp; - Total LDH will begin to rise 2 to 5
+    days after an MI; the elevation can last 10 days.</h4>
+    <ul type="none">
+      <li>140-280 U/L</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4>LDH-1 and LDH-2&nbsp; LDH isoenzymes - <cite>Compare LDH 1 and LDH 2
+    levels. Normally, the LDH-1 value will be less than the LDH-2. In the acute
+    MI, however, the LDH 2 remains constant, while LDH 1 rises. When the LDH 1
+    is higher than LDH 2, the LDH is said to be <i><font FACE="Times New Roman">flipped</font></i>,
+    which is highly suggestive of an MI. A flipped pattern appears 12-24 hours
+    post MI and persists for 48 hours.</cite></h4>
+    <ul type="none">
+      <li>LDH-1 <font FACE="Arial">18%-33%</font></li>
+      <li>LDH-2 <font FACE="Arial">28%-40%</font></li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4>SGOT&nbsp; - <cite>will begin to rise in 8-12 hours and peak in 18-30
+    hours</cite></h4>
+    <ul type="none">
+      <li>10-42 U/L</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4>Myoglobin -&nbsp;<cite> early and sensitive diagnosis of myocardial
+    infarction in the emergency department This small heme protein becomes
+    abnormal within 1 to 2 hours of necrosis, peaks in 4-8 hours, and drops to
+    normal in about 12 hours.</cite></h4>
+    <ul type="none">
+      <li>&lt; 1</li>
+    </ul>
+    <p>&nbsp;</li>
+  <li>
+    <h4>Troponin Complex - Peaks in 10-24 hours, begins to fall off after 1-2
+    weeks.</h4>
+    <ul type="none">
+      <li>&lt; 0.4</li>
+    </ul>
+  </li>
+
+</ul>
+<h4 align="center">Table of Cardiac markers</h4>
+<div align="center">
+  
+<table  style="width:100%;">
+    <tr>
+      <td WIDTH="36%"><strong><font FACE="Verdana" SIZE="2">
+        <p>Serum Markers of Myocardial Injury</p></font></strong></td>
+      <td WIDTH="18%">&nbsp;</td>
+      <td WIDTH="16%">&nbsp;</td>
+      <td WIDTH="30%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td WIDTH="36%">&nbsp;</td>
+      <td WIDTH="18%"><strong><font FACE="Verdana" SIZE="2">
+        <p>Detected</p></font></strong></td>
+      <td WIDTH="16%"><strong><font FACE="Verdana" SIZE="2">
+        <p>Peak</p></font></strong></td>
+      <td WIDTH="30%"><strong><font FACE="Verdana" SIZE="2">
+        <p>Falls</p></font></strong></td>
+    </tr>
+    <tr>
+      <td WIDTH="36%"><strong><font FACE="Verdana" SIZE="2">
+        <p>Myoglobin</p></font></strong></td>
+      <td WIDTH="18%"><font FACE="Verdana" SIZE="2">
+        <p>1-3</p></font></td>
+      <td WIDTH="16%"><font FACE="Verdana" SIZE="2">
+        <p>1-8</p></font></td>
+      <td WIDTH="30%"><font FACE="Verdana" SIZE="2">
+        <p>12-18</p></font></td>
+    </tr>
+    <tr>
+      <td WIDTH="36%"><strong><font FACE="Verdana" SIZE="2">
+        <p>CK/CK-MB</p></font></strong></td>
+      <td WIDTH="18%"><font FACE="Verdana" SIZE="2">
+        <p>3-8</p></font></td>
+      <td WIDTH="16%"><font FACE="Verdana" SIZE="2">
+        <p>12-16</p></font></td>
+      <td WIDTH="30%"><font FACE="Verdana" SIZE="2">
+        <p>24-48</p></font></td>
+    </tr>
+    <tr>
+      <td WIDTH="36%"><strong><font FACE="Verdana" SIZE="2">
+        <p>MB Isoforms</p></font></strong></td>
+      <td WIDTH="18%"><font FACE="Verdana" SIZE="2">
+        <p>1-6</p></font></td>
+      <td WIDTH="16%"><font FACE="Verdana" SIZE="2">
+        <p>4-8</p></font></td>
+      <td WIDTH="30%"><font FACE="Verdana" SIZE="2">
+        <p>12-48</p></font></td>
+    </tr>
+    <tr>
+      <td WIDTH="36%"><strong><font FACE="Verdana" SIZE="2">
+        <p>Troponin Complex</p></font></strong></td>
+      <td WIDTH="18%"><font FACE="Verdana" SIZE="2">
+        <p>3-6</p></font></td>
+      <td WIDTH="16%"><font FACE="Verdana" SIZE="2">
+        <p>10-24</p></font></td>
+      <td WIDTH="30%"><font FACE="Verdana" SIZE="2">
+        <p>cTnI: 5-9 days cTnT: 7-14 days</p></font></td>
+    </tr>
+  </table>
+
+
+</div>
+</div> <br>
+	</div>
+
+
+
+<div style="text-align:center; display:block; font-size:large; color:#ffffff" class="button" onclick="showHide('onlinestuff')" >ONLINE RESOURCES</div>
+	<div class="drop" id="onlinestuff" style="box-shadow:1px 1px 4px #aaa; width:98%;  padding:2px; left:4px; z-index:1;" id="cancer">
+ <br>
+<form name="searchform" onsubmit="return dosearch();" style="background:#fff; display:block; margin-left:auto; border-radius:3px; padding:2px; margin-right:auto; box-shadow:#aaa 0px 0px 2px; width:95%; margin-bottom:8px;">
+		<select name="sengines" title="Select Search Engine" style="display:none;">
+			<option value="http://medical-dictionary.thefreedictionary.com/" selected >Dict</option>
+		</select>
+		<input type="text" name="searchterms" id="text-area" placeholder="Medical Dictionary" style="color:#333; min-height:24px; width: 75%; max-width:600px;  border: 1px #0ae solid;"><input type="submit" name="SearchSubmit" id="submit" value="Search" style="color:#ffffff !important; background: #0ae; border:none;  min-height:24px;  vertical-align:top; border:none;"/>
+	</form>
+
+
+
+<span class="subjects"><a href="http://accessmedicine.mhmedical.com/book.aspx?bookid=331"  style="background:#0a6; color:#fff;">Harrison's Online (18<sup style="font-size:x-small;">th</sup> ed)</a></span>
+<span class="subjects"><a href="http://geekymedics.com/">Medical Study Notes</a></span>
+<span class="subjects"><a href="http://www.medicinenet.com/image_collection/article.htm" style="background:#a80; color:#fff;"> Images of Medical Disorders</a></span>
+<span class="subjects"><a href="http://www.doctorslounge.com/primary/diagnosis/"> Differential Diagnosis </a></span>
+<span class="subjects"><a href="http://radiologymasterclass.co.uk/gallery/galleries" style="background:#268; color:#fff;"> Radiology Gallery</a></span>
+
+<span class="subjects"><a href="http://www.doctorslounge.com/primary/procedures/list.htm"> Medical Procedures </a></span>
+<span class="subjects"><a href="http://www.medindia.net/surgicalprocedures/index.asp"> Surgical Procedures </a></span>
+<span class="subjects"><a href="http://en.ecgpedia.org/index.php?title=Introduction"  style="background:#a20; color:#fff;">Learn ECG</a></span>
+ <br> <br>
+
+<div onclick="showHide('journals')" class="topic">Case Journals</div>
+<div id="journals" style="text-align:center;" class="topicdrop">
+<span class="subjects"><a href="http://www.nejm.org/"> New England Journal of Medicine </a></span>
+<span class="subjects"><a href="http://clinicalcases.org/"> ClinicalCases.org </a></span>
+<span class="subjects"><a href="http://jmedicalcasereports.biomedcentral.com/"> Journal of Medical Case Reports </a></span>
+<span class="subjects"><a href="http://www.journalmc.org/"> Journal of Medical Cases </a></span>
+<span class="subjects"><a href="http://emergencymedicinecases.com/"> Emergency Medicine Cases </a></span>
+ <br> 
+	<form method="get" action="http://cse.google.com/cse">
+		<input type="text" style="height:32px; color:#06a; width: 84%; max-width:600px;  border: 1px #0ae solid;" name="q" placeholder="Search medical cases"/><input type="hidden" name="cx" value="013438039746594386770:g9mac456si4"/><input type="submit" value="Go" style="color:#ffffff; background: #0ae; height:32px; vertical-align:top; border:none;"/>
+	</form>
+</div>
+
+ <br>
+	</div>
+</div>
+<div style="text-align:center; display:block; font-size:large; color:#ffffff" class="button" onclick="showHide('bmicalc')">
+CALCULATE BMI</div>
+<div id="bmicalc" class="drop"  style="box-shadow:0px 0px 2px #000 !important;  background:rgba(000,000,000,0.2); padding:3px; color:#ffffff; width:97%; text-align:left;">
+
+  <form name="bmiForm">
+Your Weight(kg): <input type="number" step="any" min="0" name="weight"  style="width:40%; border:#06a 1px solid;"><br />
+Your Height(cm): <input type="number" step="any" min="0" name="height" style="width:40%; margin-top:6px;   border:#06a 1px solid;"><br />
+<input type="button" value="Calculate BMI" onClick="calculateBmi()" style="background: #06a; font-weight:bold; padding:4px; margin-top:6px; margin-left:6px; border:none; border-radius:2px; box-shadow:#000 0px 0px 2px; color:#ffffff;"><br /> <br>
+Your BMI: <input type="text" name="bmi" size="10" placeholder="..." style="margin-top:6px; color:#fff; background:rgba(000,000,000,0.0); width:40%; border:none;"><br />
+This Means: <input type="text" name="meaning"  placeholder="..."  style="margin-top:6px; color:#fff; background:rgba(000,000,000,0.0); width:40%; border:none;"><br />
+<input type="reset" value="Reset" style="background: #06a; font-weight:bold; padding:4px; margin-top:6px; margin-left:6px; border:none; border-radius:2px; box-shadow:#000 0px 0px 2px; color:#ffffff;"/>
+</form>
+<span style="font-size:x-small; color:#aaa;"> &nbsp;According to WHO, 1995, 2000 and 2004 classification.</span>
+
+
+
+</div>
+
+<div style="text-align:center; display:block; font-size:large; color:#ffffff" class="button" onclick="showHide('abouthelp')">ABOUT MINI CLINIC</div>
+
+
+<div id="abouthelp" class="drop"  style="box-shadow:0px 0px 2px #000 !important;  background:rgba(000,000,000,0.2); padding:3px; color:#ffffff; width:97%; text-align:left; font-family:sans-serif;">
+
+ <br><strong>Mini Clinic</strong> v1.0, by <strong>Himankan Kashyap</strong> <br>
+ <p>
+  Presenting the all new Mini Clinic, an app designed to aid in clinics and wards, an app every medico must have! Don't enter the clinic or ward alone anymore; Mini Clinic is here to guide us all ! Mini clinic is an android app with all information to aid you; starting from history to diagnosis.
+ </p>
+<ul style="padding:12px;" type="none"><strong><u>References</u></strong> <br>
+<li><a href="https://meded.ucsd.edu/" style="color:#ff6;"> University of California</a></li>
+<li><a href="http://depts.washington.edu/" style="color:#ff6;">University of Washington</a></li>
+<li><a href="http://www.ncbi.nlm.nih.gov/" style="color:#ff6;">NCBI, U.S. National Library of Medicine</a></li>
+<li><a href="http://www.surgicalnotes.co.uk/" style="color:#ff6;">Surgical Notes UK</a></li>
+<li><a href="http://www.surgicalnotes.co.uk/" style="color:#ff6;">Surgical Notes UK</a></li>
+<a href="http://www.clinicalexam.com/pda/" style="color:#ff6;">ClinicalExam.com</a> <span style="font-size:small;">(Systemic Examination)</span>
+</ul>
+<br>
+<div style="text-align:center;">
+<a href="https://sites.google.com/site/indianmedicosonline/about-author" style="color:#58e; font-weight:bold; background:#333; margin-right:auto; padding:4px; border-radius:3px; box-shadow:#000 0px 0px 2px;">About Author</a>
+</div>
+ <br><br>
+All information/materials have been sourced from free open sources and are meant for free and educational use only. Utmost care has been taken so that no copyright is violated. In case you find any content that violates copyright, is illegal or inaccurate please write to <em>himankan@yahoo.in</em> and the content will be edited or removed as needed.
+ <br>
+
+Mini Clinic Android<sup>TM</sup> App is meant for informational purposes only, and is not intended to constitute professional medical advice, diagnosis or treatment. The author shall be in no way responsible for your use of Mini Clinic, or any information that you obtain from Mini Clinic. You acknowledge that when using Mini Clinic you do so at your own choice and in agreement with this disclaimer/license. <br>
+
+<p style="font-size:small;">
+[LICENSE]: [Licensed as Freeware] <br>
+Copyright Notice: Not officially copyrighted; though some parts of this software may be copyrighted by various people, agencies or parties. Some parts may have been used under the Creative Commons License. <br>
+
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify, 
+merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following 
+
+ <br>
+<strong>Conditions:</strong>
+ <br>
+The above notice and this permission notice shall be included in all copies 
+or substantial portions of the Software.
+ <br>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES 
+OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</div>
+</p>
+
+
+</body>
+</html>
